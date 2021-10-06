@@ -21,7 +21,7 @@ public class HeroBehavior : MonoBehaviour
 	readonly float playerTopSpeed = 6f;
 	readonly float playerFriction = 20f;
 	
-
+	
 	//Jump
 	readonly float jumpHeight = 15;
 	readonly float hardJumpCooldown = 0.045f;
