@@ -76,7 +76,7 @@ public class HeroBehavior : MonoBehaviour
 	{
 		if (currentGroundAngle != 0)
 		{
-			//set our force to be the ground to start
+			//declare a vector for our groun force
 			Vector2 counterSlopeForce;
 
 			//give our vector its upward component
