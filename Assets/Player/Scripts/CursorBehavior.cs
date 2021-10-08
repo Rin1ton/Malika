@@ -5,6 +5,9 @@ using UnityEngine;
 public class CursorBehavior : MonoBehaviour
 {
 
+	//dumb
+	public GameObject MyChest;
+
 	readonly float aimAssistMagnitude = 0.20f;
 	Vector2 cursorPositionInWorld;
 	Collider2D[] collidersNearCursor;
@@ -83,9 +86,6 @@ public class CursorBehavior : MonoBehaviour
 			//set our object back to null
 			heldObjectRigidBody = null;
 		}
-
-		Debug.Log(timeSinceStartedHoldingTelekinesesButton < maxTimeToHoldButtonForJab);
-
 	}
 
 	void ObjectGrabAndThrow()
@@ -94,7 +94,11 @@ public class CursorBehavior : MonoBehaviour
 		if(Input.GetKey(Controls.telekinesesButton) && closestCollider != null)
 		{
 			heldObjectRigidBody = closestCollider.gameObject.GetComponent<Rigidbody2D>();
-			heldObjectRigidBody.transform.position = cursorPositionInWorld;
+			//heldObjectRigidBody.transform.position = cursorPositionInWorld;
+			Debug.Log(cursorPositionInWorld - new Vector2(heldObjectRigidBody.gameObject.transform.position.x, heldObjectRigidBody.gameObject.transform.position.y));
+			heldObjectRigidBody.velocity = (cursorPositionInWorld - (new Vector2(heldObjectRigidBody.transform.position.x, heldObjectRigidBody.transform.position.y) + heldObjectRigidBody.gameObject.GetComponent<Collider2D>().offset/2)) * 30;
+			if (Input.GetKeyDown(Controls.telekinesesButton))
+				;//	Instantiate(MyChest, new Vector2(heldObjectRigidBody.gameObject.transform.position.x, heldObjectRigidBody.gameObject.transform.position.y), Quaternion.identity);
 		}
 	}
 
