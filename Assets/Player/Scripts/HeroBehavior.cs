@@ -21,9 +21,8 @@ public class HeroBehavior : MonoBehaviour
 	readonly float playerTopSpeed = 6f;
 	readonly float playerFriction = 20f;
 	
-	
 	//Jump
-	readonly float jumpHeight = 15;
+	readonly float jumpHeight = 11f;
 	readonly float hardJumpCooldown = 0.045f;
 	readonly float coyoteTime = 0.20f;
 	bool jumpReady = true;
@@ -126,7 +125,7 @@ public class HeroBehavior : MonoBehaviour
 
 		//I love you Brianna :]
 		//do a jump
-		if (Input.GetKeyDown(KeyCode.Space) && jumpReady)
+		if (Input.GetKeyDown(Controls.jumpButton) && jumpReady)
 		{
 			myRB.velocity = new Vector2(myRB.velocity.x, jumpHeight);
 			jumpReady = false;

@@ -5,9 +5,18 @@ using UnityEngine;
 public class CursorBehavior : MonoBehaviour
 {
 
+	readonly float aimAssistMagnitude = 0.20f;
 	Vector2 cursorPositionInWorld;
-	readonly float aimAssistMagnitude = 0.25f;
 	Collider2D[] collidersNearCursor;
+	Rigidbody2D heldObjectRigidBody;
+	Collider2D closestCollider;
+	float timeSinceStartedHoldingTelekinesesButton = 0;
+
+	//Jab
+	readonly float jabForce = 10;
+	readonly float maxTimeToHoldButtonForJab = 0.3f;
+
+	//
 
 	// Start is called before the first frame update
 	void Start()
@@ -18,8 +27,20 @@ public class CursorBehavior : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		SetTelekinesesCursorPosition();
+		Timers();
+		SetTelekinesesCursorPosition();			//has to happen before any telekineses moves
+		ObjectJab();
+		ObjectGrabAndThrow();
 	}
+
+	void Timers()
+	{
+		if (Input.GetKey(Controls.telekinesesButton))
+			timeSinceStartedHoldingTelekinesesButton += Time.deltaTime;
+		if (Input.GetKeyDown(Controls.telekinesesButton))
+			timeSinceStartedHoldingTelekinesesButton = 0;
+	}
+
 
 	void SetTelekinesesCursorPosition()
 	{
@@ -29,7 +50,7 @@ public class CursorBehavior : MonoBehaviour
 
 		//prepare to sift through that array
 		float distanceToClosestObject = Mathf.Infinity;
-		Collider2D closestCollider = null;
+		closestCollider = null;
 
 		//sift through that array
 		for (int colliderBeingChecked = 0; colliderBeingChecked < collidersNearCursor.Length; colliderBeingChecked++)
@@ -39,15 +60,42 @@ public class CursorBehavior : MonoBehaviour
 			if (distanceToClosestObject > Vector2.Distance(cursorPositionInWorld, collidersNearCursor[colliderBeingChecked].transform.position) && 
 				collidersNearCursor[colliderBeingChecked].gameObject.layer == LayerMask.NameToLayer("Throwable"))
 			{
+				//set our new closest object
 				distanceToClosestObject = Vector2.Distance(cursorPositionInWorld, collidersNearCursor[colliderBeingChecked].transform.position);
 				closestCollider = collidersNearCursor[colliderBeingChecked];
-				Debug.LogError("myballs");
 			}
 		}
-
-		if (closestCollider != null)
-			Debug.Log(closestCollider.transform.position);
-		else
-			Debug.Log("nothing");
 	}
+
+	void ObjectJab()
+	{
+		//set our heldObject if we're clicking on something
+		if (Input.GetKeyDown(Controls.telekinesesButton) && closestCollider != null)
+			heldObjectRigidBody = closestCollider.gameObject.GetComponent<Rigidbody2D>();
+
+		//check if we can we're clicking on a collider
+		if (Input.GetKeyUp(Controls.telekinesesButton) && heldObjectRigidBody != null && timeSinceStartedHoldingTelekinesesButton < maxTimeToHoldButtonForJab)
+		{
+			//if our object has an RB, jab it
+			if (heldObjectRigidBody != null)
+				heldObjectRigidBody.velocity += new Vector2(0, jabForce);;
+
+			//set our object back to null
+			heldObjectRigidBody = null;
+		}
+
+		Debug.Log(timeSinceStartedHoldingTelekinesesButton < maxTimeToHoldButtonForJab);
+
+	}
+
+	void ObjectGrabAndThrow()
+	{
+		//start the grab
+		if(Input.GetKey(Controls.telekinesesButton) && closestCollider != null)
+		{
+			heldObjectRigidBody = closestCollider.gameObject.GetComponent<Rigidbody2D>();
+			heldObjectRigidBody.transform.position = cursorPositionInWorld;
+		}
+	}
+
 }
