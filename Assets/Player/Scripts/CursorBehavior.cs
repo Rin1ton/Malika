@@ -8,7 +8,7 @@ public class CursorBehavior : MonoBehaviour
 	//dumb
 	public GameObject MyChest;
 
-	readonly float aimAssistMagnitude = 0.25f;
+	readonly float aimAssistMagnitude = 0.2f;
 	Vector2 cursorPositionInWorld;
 	Collider2D[] collidersNearCursor;
 	Rigidbody2D heldObjectRigidBody;
@@ -20,7 +20,7 @@ public class CursorBehavior : MonoBehaviour
 	readonly float maxTimeToHoldButtonForJab = 0.3f;
 
 	//Grab
-	readonly float maxGrabFollowSpeed = 45;
+	readonly float maxGrabFollowSpeed = 450;
 
 	//
 
@@ -35,8 +35,13 @@ public class CursorBehavior : MonoBehaviour
 	{
 		Timers();
 		SetTelekinesesCursorPosition();			//has to happen before any telekineses moves
-		//ObjectJab();
+		ObjectJab();
 		ObjectGrabAndThrow();
+	}
+
+	private void FixedUpdate()
+	{
+		MoveGrabbedObjectToCursor();
 	}
 
 	void Timers()
@@ -99,18 +104,22 @@ public class CursorBehavior : MonoBehaviour
 			//get our object's rigidbody
 			heldObjectRigidBody = closestCollider.gameObject.GetComponent<Rigidbody2D>();
 		}
-		
-		//move the object to the cursor constantly if we have an object
-		if (heldObjectRigidBody != null && Input.GetKey(Controls.telekinesesButton))
-		{
-			//move the object to the cursor
-			heldObjectRigidBody.velocity = (cursorPositionInWorld - (new Vector2(heldObjectRigidBody.transform.position.x, heldObjectRigidBody.transform.position.y) + heldObjectRigidBody.gameObject.GetComponent<Collider2D>().offset / 2)) * maxGrabFollowSpeed /* Time.deltaTime*/;
-		}
 
 		//let go if not holding the button anymore(plays once at the end of grab
 		if (Input.GetKeyUp(Controls.telekinesesButton) && heldObjectRigidBody != null)
 		{
 			heldObjectRigidBody = null;
+		}
+	}
+
+	void MoveGrabbedObjectToCursor()
+	{
+		//move the object to the cursor constantly if we have an object
+		if (heldObjectRigidBody != null && Input.GetKey(Controls.telekinesesButton))
+		{
+			//move the object to the cursor
+			heldObjectRigidBody.velocity = (cursorPositionInWorld - (new Vector2(heldObjectRigidBody.transform.position.x, heldObjectRigidBody.transform.position.y)
+			/*get rid of this bit when we have better objects*/ + heldObjectRigidBody.gameObject.GetComponent<Collider2D>().offset / 2)/**/) * maxGrabFollowSpeed * Time.fixedDeltaTime;
 		}
 	}
 
