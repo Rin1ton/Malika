@@ -67,9 +67,9 @@ public class CursorBehavior : MonoBehaviour
 		for (int colliderBeingChecked = 0; colliderBeingChecked < collidersNearCursor.Length; colliderBeingChecked++)
 		{
 			//check if the object we're looking as is closer to the cursor than any other we've checked so far
-			//as well as the collider is on the throwable object layer
+			//as well as check to see if it has a throwableobject script
 			if (distanceToClosestObject > Vector2.Distance(cursorPositionInWorld, collidersNearCursor[colliderBeingChecked].transform.position) && 
-				collidersNearCursor[colliderBeingChecked].gameObject.layer == LayerMask.NameToLayer("Throwable"))
+				collidersNearCursor[colliderBeingChecked].gameObject.GetComponent<ThrowableObjectBehavior>() != null)
 			{
 				//set our new closest object
 				distanceToClosestObject = Vector2.Distance(cursorPositionInWorld, collidersNearCursor[colliderBeingChecked].transform.position);

@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 624834698291185587}
   - component: {fileID: 4695378777990386879}
   - component: {fileID: 111954952615477617}
+  - component: {fileID: 4125424936661680848}
   m_Layer: 7
   m_Name: ThrowableObject
   m_TagString: Untagged
@@ -162,3 +163,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &4125424936661680848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190060943513488166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498dc0227cc75b04c8b3cd6f6af59bd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
