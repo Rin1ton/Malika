@@ -8,6 +8,7 @@ public class HeroBehavior : MonoBehaviour
 	Vector2 wishDir;
 	Rigidbody2D myRB;
 	readonly float shortTimerStop = 120;
+	Vector2 pushDir;
 
 	//Grounding
 	readonly float maxGroundAngle = 46;
@@ -17,14 +18,14 @@ public class HeroBehavior : MonoBehaviour
 	float timeSinceGrounded = 0;
 
 	//Running
-	readonly float movementForce = 1500f;
-	readonly float playerTopSpeed = 6f;
-	readonly float playerFriction = 20f;
+	readonly float movementForce = 1500;
+	readonly float playerTopSpeed = 6;
+	readonly float playerFriction = 20;
 	
 	//Jump
-	readonly float jumpHeight = 11f;
+	readonly float jumpHeight = 11;
 	readonly float hardJumpCooldown = 0.045f;
-	readonly float coyoteTime = 0.20f;
+	readonly float coyoteTime = 0.2f;
 	bool jumpReady = true;
 	float timeSinceLastJump = 0;
 
@@ -37,7 +38,7 @@ public class HeroBehavior : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		
+		pushDir = Vector2.zero;
 	}
 
 	// Update is called once per frame
@@ -99,7 +100,8 @@ public class HeroBehavior : MonoBehaviour
 
 	void Movement()
 	{
-		Vector2 pushDir = new Vector2();
+		//reset pushdir
+		pushDir = Vector2.zero;
 
 		//set push direction to be our keyboard input
 		if (Vector2.Dot(wishDir, myRB.velocity) < 0 || Mathf.Abs(isGrounded ? myRB.velocity.magnitude : myRB.velocity.x) < playerTopSpeed)
@@ -109,7 +111,8 @@ public class HeroBehavior : MonoBehaviour
 		if (Vector2.Dot(wishDir, myRB.velocity) <= 0 && myRB.velocity.magnitude != 0 && isGrounded)
 			myRB.velocity = myRB.velocity.normalized * 
 							Mathf.Clamp((myRB.velocity.magnitude - playerFriction * Time.deltaTime), 0f, Mathf.Infinity);
-		
+
+		//apply our force
 		myRB.AddForce(pushDir);
 	}
 
