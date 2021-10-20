@@ -128,7 +128,7 @@ public class HeroBehavior : MonoBehaviour
 
 		//I love you Brianna :]
 		//do a jump
-		if (Input.GetKeyDown(Controls.jumpButton) && jumpReady)
+		if (Input.GetKeyDown(References.jumpButton) && jumpReady)
 		{
 			myRB.velocity = new Vector2(myRB.velocity.x, jumpHeight);
 			jumpReady = false;

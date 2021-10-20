@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Controls
+public static class References
 {
 	readonly public static KeyCode jumpButton = KeyCode.Space;
 	readonly public static KeyCode telekinesesButton = KeyCode.Mouse0;
+
+	readonly public static float throwableMinSpeedToKill = 22;
 }
