@@ -20,7 +20,7 @@ public class CursorBehavior : MonoBehaviour
 	readonly float maxTimeToHoldButtonForJab = 0.3f;
 
 	//Grab
-	readonly float maxGrabFollowSpeed = 450;
+	readonly float maxGrabFollowSpeed = 525;
 
 	//
 

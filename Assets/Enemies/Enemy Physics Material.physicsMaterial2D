@@ -6,6 +6,6 @@ PhysicsMaterial2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Throwable Object Physics Material
-  friction: 0.05
-  bounciness: 0.3
+  m_Name: Enemy Physics Material
+  friction: 0
+  bounciness: 0.2

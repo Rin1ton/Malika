@@ -29,6 +29,9 @@ public class HeroBehavior : MonoBehaviour
 	bool jumpReady = true;
 	float timeSinceLastJump = 0;
 
+	//RocketBoots
+	bool RocketBootsReady = true;
+
 
 	private void Awake()
 	{
@@ -47,6 +50,7 @@ public class HeroBehavior : MonoBehaviour
 		Timers();
 		KeyboardInput();
 		Jump();
+		RocketBoots();
 		CheckIfGrounded();
 	}
 
@@ -137,6 +141,22 @@ public class HeroBehavior : MonoBehaviour
 
 	}
 
+	void RocketBoots()
+	{
+		//reset jump *before* we jump, if we're going to
+		if (isGrounded && timeSinceLastJump >= hardJumpCooldown)
+			RocketBootsReady = true;
+
+		//I love you Brianna :]
+		//do a jump
+		if (Input.GetKeyDown(References.rocketBootsButton) && RocketBootsReady)
+		{
+			myRB.velocity = new Vector2(myRB.velocity.x, jumpHeight);
+			RocketBootsReady = false;
+			timeSinceLastJump = 0;
+		}
+	}
+
 	void OnCollisionExit2D(Collision2D collision)
 	{
 		GroundNormal(collision);
@@ -145,7 +165,6 @@ public class HeroBehavior : MonoBehaviour
 	private void OnCollisionStay2D(Collision2D collision)
 	{
 		GroundNormal(collision);
-		
 	}
 
 	void GroundNormal(Collision2D other)

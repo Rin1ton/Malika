@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoombaBehavior : MonoBehaviour
+public class TortoiseBehavior : MonoBehaviour
 {
 	//housekeeping
 	GroundCheckScript myGroundChecker;
@@ -119,7 +119,7 @@ public class GoombaBehavior : MonoBehaviour
 	void TakeDamage(Collision2D collision)
 	{
 		//check if we're hit by something fast enough to take damage
-		if(collision.relativeVelocity.magnitude >= References.throwableMinSpeedToKill)
+		if (collision.relativeVelocity.magnitude >= References.throwableMinSpeedToKill)
 		{
 			//get a reference to the object that hit us
 			ThrowableObjectBehavior throwableObjectThatHitMe = collision.collider.gameObject.GetComponent<ThrowableObjectBehavior>();
