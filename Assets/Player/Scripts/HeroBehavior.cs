@@ -36,6 +36,8 @@ public class HeroBehavior : MonoBehaviour
 	private void Awake()
 	{
 		myRB = gameObject.GetComponent<Rigidbody2D>();
+
+		References.theHero = gameObject;
 	}
 
 	// Start is called before the first frame update

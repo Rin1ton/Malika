@@ -9,7 +9,7 @@ public class TortoiseBehavior : MonoBehaviour
 
 	//moving
 	readonly float defaultStartDirection = -1;
-	readonly float goombaTopSpeed = 3f;
+	readonly float goombaTopSpeed = 2f;
 	readonly float movementForce = 1500;
 	readonly float changeDirectionStopThreshold = 0.2f;
 	readonly float goombaFriction = 20;
@@ -105,6 +105,36 @@ public class TortoiseBehavior : MonoBehaviour
 		{
 			//say that we're changing direction
 			timeSinceDirectionChange = 0;
+
+			//change direction
+			wishDir = new Vector2(-wishDir.x, 0);
+		}
+
+		//check if we're over a ledge and change direction if we are (if we haven't too recently)
+		if (myGroundChecker.currentGroundAngle != 0 && timeSinceDirectionChange >= timeBeforeStopCheck)
+		{
+			//say we're changing direction
+			timeSinceDirectionChange = 0;
+
+			//stop dead so we don't go over the ledge
+			myRB.velocity = new Vector2(0, myRB.velocity.y);
+
+			//change direction
+			wishDir = new Vector2(-wishDir.x, 0);
+		}
+
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		//check if we're touching a stop point and change direction if we are (if we haven't too recently)
+		if (collision.gameObject.layer == LayerMask.NameToLayer("TortoiseStopPoint"))
+		{
+			//say we're changing direction
+			timeSinceDirectionChange = 0;
+
+			//stop dead so we don't go over the ledge
+			myRB.velocity = new Vector2(0, myRB.velocity.y);
 
 			//change direction
 			wishDir = new Vector2(-wishDir.x, 0);
