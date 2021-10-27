@@ -101,29 +101,19 @@ public class GoombaBehavior : MonoBehaviour
 	void ChangeDirection()
 	{
 		//check that we're stopped and we haven't changed direction recently before we do it
-		/*if (myRB.velocity.magnitude < changeDirectionStopThreshold && timeSinceDirectionChange >= timeBeforeStopCheck)
+		if (myRB.velocity.magnitude < changeDirectionStopThreshold && timeSinceDirectionChange >= timeBeforeStopCheck)
 		{
 			//say that we're changing direction
 			timeSinceDirectionChange = 0;
 
 			//change direction
 			wishDir = new Vector2(-wishDir.x, 0);
-		}*/
+		}
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		TakeDamage(collision);
-
-		//say that we're changing direction
-		timeSinceDirectionChange = 0;
-
-		//
-		//myRB.velocity
-
-		//change direction
-		wishDir = new Vector2(-wishDir.x, 0);
-
 	}
 
 	void TakeDamage(Collision2D collision)
