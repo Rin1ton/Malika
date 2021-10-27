@@ -110,19 +110,6 @@ public class TortoiseBehavior : MonoBehaviour
 			wishDir = new Vector2(-wishDir.x, 0);
 		}
 
-		//check if we're over a ledge and change direction if we are (if we haven't too recently)
-		if (myGroundChecker.currentGroundAngle != 0 && timeSinceDirectionChange >= timeBeforeStopCheck)
-		{
-			//say we're changing direction
-			timeSinceDirectionChange = 0;
-
-			//stop dead so we don't go over the ledge
-			myRB.velocity = new Vector2(0, myRB.velocity.y);
-
-			//change direction
-			wishDir = new Vector2(-wishDir.x, 0);
-		}
-
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
