@@ -6,6 +6,7 @@ public class CameraBehavior : MonoBehaviour
 {
 
 	readonly float cameraSpeed = 1;
+	readonly float cameraVerticalOffset = 2f;
 
 	// Start is called before the first frame update
 	void Start()
@@ -25,7 +26,7 @@ public class CameraBehavior : MonoBehaviour
 		//save our lerped position
 		Vector3 lerpedCameraPos = Vector2.Lerp(transform.position, References.theHero.transform.position, cameraSpeed * Time.deltaTime);
 
-		//apply our lerped position
-		transform.position = new Vector3(lerpedCameraPos.x, lerpedCameraPos.y, transform.position.z);
+		//apply our lerped position and apply camera offset
+		transform.position = new Vector3(lerpedCameraPos.x, lerpedCameraPos.y + cameraVerticalOffset * Time.deltaTime, transform.position.z);
 	}
 }
