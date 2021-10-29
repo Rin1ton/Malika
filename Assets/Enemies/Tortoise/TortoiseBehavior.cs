@@ -10,8 +10,8 @@ public class TortoiseBehavior : MonoBehaviour
 	//moving
 	readonly float defaultStartDirection = -1;
 	readonly float goombaTopSpeed = 2f;
-	readonly float movementForce = 1500;
-	readonly float changeDirectionStopThreshold = 0.2f;
+	readonly float movementForce = 3000;
+	readonly float changeDirectionStopThreshold = 0.8f;
 	readonly float goombaFriction = 20;
 	public float wishXMovement;
 	Rigidbody2D myRB;
@@ -20,7 +20,7 @@ public class TortoiseBehavior : MonoBehaviour
 
 	//Timers
 	float timeSinceDirectionChange = 0;
-	float timeBeforeStopCheck = 0.8f;
+	float timeBeforeStopCheck = 0.3f;
 
 	//Dying
 	readonly float horizontalDeathFlingOffset = 10;

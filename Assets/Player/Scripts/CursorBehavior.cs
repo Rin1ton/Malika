@@ -35,7 +35,6 @@ public class CursorBehavior : MonoBehaviour
 	{
 		Timers();
 		SetTelekinesesCursorPosition();			//has to happen before any telekineses moves
-		//ObjectJab();
 		ObjectGrabAndThrow();
 	}
 
@@ -78,24 +77,6 @@ public class CursorBehavior : MonoBehaviour
 		}
 	}
 
-	void ObjectJab()
-	{
-		//set our heldObject if we're clicking on something
-		if (Input.GetKeyDown(References.telekinesesButton) && closestCollider != null)
-			heldObjectRigidBody = closestCollider.gameObject.GetComponent<Rigidbody2D>();
-
-		//check if we can we're clicking on a collider
-		if (Input.GetKeyUp(References.telekinesesButton) && heldObjectRigidBody != null && timeSinceStartedHoldingTelekinesesButton < maxTimeToHoldButtonForJab)
-		{
-			//if our object has an RB, jab it
-			if (heldObjectRigidBody != null)
-				heldObjectRigidBody.velocity += new Vector2(0, jabForce);;
-
-			//set our object back to null
-			heldObjectRigidBody = null;
-		}
-	}
-
 	void ObjectGrabAndThrow()
 	{
 		//do the grab (plays once at start of grab)
@@ -103,11 +84,19 @@ public class CursorBehavior : MonoBehaviour
 		{
 			//get our object's rigidbody
 			heldObjectRigidBody = closestCollider.gameObject.GetComponent<Rigidbody2D>();
+
+			//tell object it's been grabbed
+			if (heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>() != null)
+				heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>().BecomeGrabbed();
 		}
 
 		//let go if not holding the button anymore (plays once at the end of grab)
 		if (Input.GetKeyUp(References.telekinesesButton) && heldObjectRigidBody != null)
 		{
+			//tell object it's been released
+			heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>().BecomeReleased();
+
+			//reset held object to null
 			heldObjectRigidBody = null;
 		}
 	}

@@ -14,8 +14,8 @@ TagManager:
   - Ground
   - Throwable
   - TortoiseStopPoint
-  - 
-  - 
+  - GrabbedObject
+  - Player
   - 
   - 
   - 

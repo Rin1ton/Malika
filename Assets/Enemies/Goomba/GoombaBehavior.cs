@@ -10,8 +10,8 @@ public class GoombaBehavior : MonoBehaviour
 	//moving
 	readonly float defaultStartDirection = -1;
 	readonly float goombaTopSpeed = 3f;
-	readonly float movementForce = 1500;
-	readonly float changeDirectionStopThreshold = 0.2f;
+	readonly float movementForce = 3000;
+	readonly float changeDirectionStopThreshold = 0.8f;
 	readonly float goombaFriction = 20;
 	public float wishXMovement;
 	Rigidbody2D myRB;
@@ -20,7 +20,7 @@ public class GoombaBehavior : MonoBehaviour
 
 	//Timers
 	float timeSinceDirectionChange = 0;
-	float timeBeforeStopCheck = 0.8f;
+	float timeBeforeStopCheck = 0.3f;
 
 	//Dying
 	readonly float horizontalDeathFlingOffset = 10;
@@ -85,7 +85,7 @@ public class GoombaBehavior : MonoBehaviour
 		//reset pushDir
 		pushDir = Vector2.zero;
 
-		//set push direction to be our keyboard input
+		//set push direction to be our wishDir
 		if (Vector2.Dot(wishDir, myRB.velocity) < 0 || Mathf.Abs(myRB.velocity.magnitude) < goombaTopSpeed)
 			pushDir = new Vector2(wishDir.x, 0) * movementForce * Time.deltaTime;
 
