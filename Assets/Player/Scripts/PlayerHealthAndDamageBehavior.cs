@@ -22,7 +22,7 @@ public class PlayerHealthAndDamageBehavior : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		Debug.Log(heroHealth);
+		
 	}
 
 	// Update is called once per frame

@@ -14,4 +14,8 @@ public static class References
 
 	//
 	public static GameObject theHero;
+
+	//
+	public static List<CheckPointBehavior> levelCheckpoints;
+	public static GameObject activeCheckpoint;
 }
