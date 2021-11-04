@@ -10,7 +10,7 @@ public class CheckPointBehavior : MonoBehaviour
     // Awake is called when the script instance is loaded
 	private void Awake()
 	{
-        References.levelCheckpoints.Add(this);
+        References.levelCheckpoints.Add(gameObject);
 	}
 
 	// Start is called before the first frame update
@@ -19,7 +19,7 @@ public class CheckPointBehavior : MonoBehaviour
         for (int checkpointBeingChecked = 0; checkpointBeingChecked < References.levelCheckpoints.Count; checkpointBeingChecked++)
 		{
 
-            CheckPointBehavior thatOne = References.levelCheckpoints[checkpointBeingChecked];
+            GameObject thatOne = References.levelCheckpoints[checkpointBeingChecked];
 
             //if the one being checked is further left than us
             if (thatOne.gameObject.transform.position.x < gameObject.transform.position.x)
