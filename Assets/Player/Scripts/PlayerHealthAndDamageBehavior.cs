@@ -53,8 +53,6 @@ public class PlayerHealthAndDamageBehavior : MonoBehaviour
 			//damage us
 			heroHealth--;
 
-			Debug.Log(heroHealth);
-
 			if (heroHealth == 0)
 			{
 				Respawn();

@@ -6,6 +6,7 @@ public class GoombaBehavior : MonoBehaviour
 {
 	//housekeeping
 	GroundCheckScript myGroundChecker;
+	ThrowableObjectBehavior myThrowability;
 
 	//moving
 	readonly float defaultStartDirection = -1;
@@ -23,7 +24,7 @@ public class GoombaBehavior : MonoBehaviour
 	float timeBeforeStopCheck = 0.3f;
 
 	//Dying
-	readonly float horizontalDeathFlingOffset = 10;
+	readonly float horizontalDeathFlingOffset = 7;
 	readonly float verticalDeathFlingOffset = 10;
 	readonly float rotationalDeathFlingOffset = 100;
 
@@ -38,19 +39,30 @@ public class GoombaBehavior : MonoBehaviour
 
 		//get my ground checker
 		myGroundChecker = GetComponent<GroundCheckScript>();
+
+		//get my throwability
+		myThrowability = GetComponent<ThrowableObjectBehavior>();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		Timers();
-		ChangeDirection();
+		if (myThrowability != null)
+		if (!myThrowability.isGrabbed)
+		{
+			ChangeDirection();
+		}
 	}
 
 	private void FixedUpdate()
 	{
-		Move();
-		CounterSlope();
+		if (myThrowability != null)
+		if (!myThrowability.isGrabbed)
+		{
+			Move();
+			CounterSlope();
+		}
 	}
 
 	void Timers()
@@ -124,10 +136,10 @@ public class GoombaBehavior : MonoBehaviour
 			//get a reference to the object that hit us
 			ThrowableObjectBehavior throwableObjectThatHitMe = collision.collider.gameObject.GetComponent<ThrowableObjectBehavior>();
 
+				Die(collision);
 			//if that object is, in fact, throwable...
 			if (throwableObjectThatHitMe != null)
 			{
-				Die(collision);
 			}
 		}
 	}
@@ -137,8 +149,19 @@ public class GoombaBehavior : MonoBehaviour
 		//disable collider
 		GetComponent<Collider2D>().enabled = false;
 
-		//disable gravity on RB and give it a velocity and rotation
-		myRB.velocity = impact.relativeVelocity * horizontalDeathFlingOffset + Vector2.up * verticalDeathFlingOffset;
+		//get dropped
+		References.theHero.GetComponent<CursorBehavior>().DropIt();
+
+		//destroy our Throwability
+		Destroy(gameObject.GetComponent<ThrowableObjectBehavior>());
+
+		//give it a velocity and rotation
+		myRB.velocity = new Vector2((impact.relativeVelocity.x < 0 ? -1 : 1) * horizontalDeathFlingOffset, verticalDeathFlingOffset);
 		myRB.angularVelocity = rotationalDeathFlingOffset;
 	}
 }
+
+
+
+
+//dying bounce should not be dependent on relative velocity

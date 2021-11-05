@@ -154,8 +154,8 @@ public class TortoiseBehavior : MonoBehaviour
 		//disable collider
 		GetComponent<Collider2D>().enabled = false;
 
-		//disable gravity on RB and give it a velocity and rotation
-		myRB.velocity = impact.relativeVelocity * horizontalDeathFlingOffset + Vector2.up * verticalDeathFlingOffset;
+		//give it a velocity and rotation
+		myRB.velocity = new Vector2((impact.relativeVelocity.x < 0 ? -1 : 1) * horizontalDeathFlingOffset, verticalDeathFlingOffset);
 		myRB.angularVelocity = rotationalDeathFlingOffset;
 	}
 }

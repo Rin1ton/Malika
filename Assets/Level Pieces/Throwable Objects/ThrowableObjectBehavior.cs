@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ThrowableObjectBehavior : MonoBehaviour
 {
 
-	bool isGrabbed = false;
+	[NonSerialized] public bool isGrabbed = false;
 	bool isPhysicalWithPlayer = true;
 	readonly float maxSpeedToBecomePhysical = 6;
 	Rigidbody2D myRB;

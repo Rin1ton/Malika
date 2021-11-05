@@ -50,7 +50,6 @@ public class CheckPointBehavior : MonoBehaviour
 
                 //MAKE A CHECKPOINT EFFECT AND TRIGGER IT HERE
                 //MAKE A CHECKPOINT EFFECT AND TRIGGER IT HERE
-                Debug.Log("new Checkpoint order: " + myCheckpointOrder);
 			}
 		}
 	}

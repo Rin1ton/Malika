@@ -9,9 +9,9 @@ public class CursorBehavior : MonoBehaviour
 	public GameObject MyChest;
 
 	readonly float aimAssistMagnitude = 0.2f;
+	[System.NonSerialized] public Rigidbody2D heldObjectRigidBody;
 	Vector2 cursorPositionInWorld;
 	Collider2D[] collidersNearCursor;
-	Rigidbody2D heldObjectRigidBody;
 	Collider2D closestCollider;
 	float timeSinceStartedHoldingTelekinesesButton = 0;
 
@@ -110,5 +110,13 @@ public class CursorBehavior : MonoBehaviour
 			heldObjectRigidBody.velocity = (cursorPositionInWorld - (new Vector2(heldObjectRigidBody.transform.position.x, heldObjectRigidBody.transform.position.y)
 			/*get rid of this bit when we have better objects*/ + heldObjectRigidBody.gameObject.GetComponent<Collider2D>().offset / 2)/**/) * maxGrabFollowSpeed * Time.fixedDeltaTime;
 		}
+	}
+
+	public void DropIt()
+	{
+		//drop the thing;
+		if (heldObjectRigidBody != null)
+			heldObjectRigidBody.gameObject.GetComponent<ThrowableObjectBehavior>().BecomeReleased();
+		heldObjectRigidBody = null;
 	}
 }
