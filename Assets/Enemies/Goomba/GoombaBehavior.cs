@@ -132,16 +132,7 @@ public class GoombaBehavior : MonoBehaviour
 	{
 		//check if we're hit by something fast enough to take damage
 		if(collision.relativeVelocity.magnitude >= References.throwableMinSpeedToKill)
-		{
-			//get a reference to the object that hit us
-			ThrowableObjectBehavior throwableObjectThatHitMe = collision.collider.gameObject.GetComponent<ThrowableObjectBehavior>();
-
-				Die(collision);
-			//if that object is, in fact, throwable...
-			if (throwableObjectThatHitMe != null)
-			{
-			}
-		}
+			Die(collision);
 	}
 
 	void Die(Collision2D impact)

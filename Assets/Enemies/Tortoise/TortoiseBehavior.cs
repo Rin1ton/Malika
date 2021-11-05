@@ -18,6 +18,15 @@ public class TortoiseBehavior : MonoBehaviour
 	Vector2 pushDir;
 	Vector2 wishDir;
 
+	//attacking
+	readonly float horizontalSearchRange = 4;
+	readonly float verticalSearchRange = 0.5f;
+	readonly float chargeWindupTime = 0.8f;
+	float timeSinceStoppedPatrolling = 0;
+	bool isPatrolling = true;
+	bool isCharging = false;
+
+
 	//Timers
 	float timeSinceDirectionChange = 0;
 	float timeBeforeStopCheck = 0.3f;
@@ -44,19 +53,30 @@ public class TortoiseBehavior : MonoBehaviour
 	void Update()
 	{
 		Timers();
-		ChangeDirection();
+		if (isPatrolling)
+		{
+			ChangeDirection();
+			ScanForPlayer();
+		}
 	}
 
 	private void FixedUpdate()
 	{
-		Move();
-		CounterSlope();
+		if (isPatrolling)
+		{
+			Patrol();
+			CounterSlope();
+		}
 	}
 
 	void Timers()
 	{
 		if (timeSinceDirectionChange < timeBeforeStopCheck)
 			timeSinceDirectionChange += Time.deltaTime;
+		if (timeSinceStoppedPatrolling <= chargeWindupTime &&
+			!isPatrolling &&
+			!isCharging)
+			timeSinceStoppedPatrolling += Time.deltaTime;
 	}
 
 	void CounterSlope()
@@ -80,7 +100,7 @@ public class TortoiseBehavior : MonoBehaviour
 		}
 	}
 
-	void Move()
+	void Patrol()
 	{
 		//reset pushDir
 		pushDir = Vector2.zero;
@@ -109,7 +129,33 @@ public class TortoiseBehavior : MonoBehaviour
 			//change direction
 			wishDir = new Vector2(-wishDir.x, 0);
 		}
+	}
 
+	void ScanForPlayer()
+	{
+		//save the distances to the player
+		float verticalDistanceToPlayer = Mathf.Abs(References.theHero.transform.position.y - transform.position.y);
+		float horizontalDistanceToPlayer = Mathf.Abs(References.theHero.transform.position.x - transform.position.x);
+
+		//if we're in range, charge
+		if (verticalDistanceToPlayer <= verticalSearchRange && horizontalDistanceToPlayer <= horizontalSearchRange)
+		{
+			isPatrolling = false;
+		}
+	}
+
+	void Charge()
+	{
+		if ()
+				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
+				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
+				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
+				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
+				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
+				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
+				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
+				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
+				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -137,16 +183,7 @@ public class TortoiseBehavior : MonoBehaviour
 	{
 		//check if we're hit by something fast enough to take damage
 		if (collision.relativeVelocity.magnitude >= References.throwableMinSpeedToKill)
-		{
-			//get a reference to the object that hit us
-			ThrowableObjectBehavior throwableObjectThatHitMe = collision.collider.gameObject.GetComponent<ThrowableObjectBehavior>();
-
-			//if that object is, in fact, throwable...
-			if (throwableObjectThatHitMe != null)
-			{
-				Die(collision);
-			}
-		}
+			Die(collision);
 	}
 
 	void Die(Collision2D impact)
