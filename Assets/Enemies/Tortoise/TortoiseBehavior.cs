@@ -146,7 +146,7 @@ public class TortoiseBehavior : MonoBehaviour
 
 	void Charge()
 	{
-		if ()
+		if (false) ;
 				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
 				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
 				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
