@@ -50,7 +50,6 @@ public class HeroBehavior : MonoBehaviour
 	void Update()
 	{
 		Timers();
-		KeyboardInput();
 		Jump();
 		RocketBoots();
 		CheckIfGrounded();
@@ -60,6 +59,7 @@ public class HeroBehavior : MonoBehaviour
 	{
 		CounterSlope();
 		Movement();
+		ResetJump();
 		MyLateUpdate();             //HAS TO BE LAST IN FIXED UPDATE
 	}
 
@@ -99,13 +99,11 @@ public class HeroBehavior : MonoBehaviour
 		}
 	}
 
-	void KeyboardInput()
-	{
-		wishDir = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
-	}
-
 	void Movement()
 	{
+		//get keyboard input
+		wishDir = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+		
 		//reset pushdir
 		pushDir = Vector2.zero;
 
@@ -141,6 +139,13 @@ public class HeroBehavior : MonoBehaviour
 			timeSinceLastJump = 0;
 		}
 
+	}
+
+	void ResetJump()
+	{
+		//reset jump *before* we jump, if we're going to
+		if (isGrounded && timeSinceLastJump >= hardJumpCooldown)
+			jumpReady = true;
 	}
 
 	void RocketBoots()
