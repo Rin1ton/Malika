@@ -17,7 +17,7 @@ public class ThrowableObjectBehavior : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		
+		myRB.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 	}
 
 	// Update is called once per frame

@@ -9,10 +9,10 @@ public class TortoiseBehavior : MonoBehaviour
 
 	//moving
 	readonly float defaultStartDirection = -1;
-	readonly float goombaTopSpeed = 2f;
+	readonly float tortoiseTopSpeed = 2f;
 	readonly float movementForce = 3000;
 	readonly float changeDirectionStopThreshold = 0.8f;
-	readonly float goombaFriction = 20;
+	readonly float tortoiseFriction = 20;
 	public float wishXMovement;
 	Rigidbody2D myRB;
 	Vector2 pushDir;
@@ -22,10 +22,10 @@ public class TortoiseBehavior : MonoBehaviour
 	readonly float horizontalSearchRange = 4;
 	readonly float verticalSearchRange = 0.5f;
 	readonly float chargeWindupTime = 0.8f;
+	readonly float chargeSpeed = 30;
 	float timeSinceStoppedPatrolling = 0;
 	bool isPatrolling = true;
 	bool isCharging = false;
-
 
 	//Timers
 	float timeSinceDirectionChange = 0;
@@ -35,6 +35,7 @@ public class TortoiseBehavior : MonoBehaviour
 	readonly float horizontalDeathFlingOffset = 10;
 	readonly float verticalDeathFlingOffset = 10;
 	readonly float rotationalDeathFlingOffset = 100;
+	bool isDead = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -53,6 +54,7 @@ public class TortoiseBehavior : MonoBehaviour
 	void Update()
 	{
 		Timers();
+		Charge();
 		if (isPatrolling)
 		{
 			ChangeDirection();
@@ -76,7 +78,10 @@ public class TortoiseBehavior : MonoBehaviour
 		if (timeSinceStoppedPatrolling <= chargeWindupTime &&
 			!isPatrolling &&
 			!isCharging)
+		{
 			timeSinceStoppedPatrolling += Time.deltaTime;
+			Debug.Log("nice");
+		}
 	}
 
 	void CounterSlope()
@@ -106,13 +111,13 @@ public class TortoiseBehavior : MonoBehaviour
 		pushDir = Vector2.zero;
 
 		//set push direction to be our keyboard input
-		if (Vector2.Dot(wishDir, myRB.velocity) < 0 || Mathf.Abs(myRB.velocity.magnitude) < goombaTopSpeed)
+		if (Vector2.Dot(wishDir, myRB.velocity) < 0 || Mathf.Abs(myRB.velocity.magnitude) < tortoiseTopSpeed)
 			pushDir = new Vector2(wishDir.x, 0) * movementForce * Time.deltaTime;
 
 		//give us friction
 		if (Vector2.Dot(wishDir, myRB.velocity) <= 0 && myRB.velocity.magnitude != 0)
 			myRB.velocity = myRB.velocity.normalized *
-							Mathf.Clamp((myRB.velocity.magnitude - goombaFriction * Time.deltaTime), 0f, Mathf.Infinity);
+							Mathf.Clamp((myRB.velocity.magnitude - tortoiseFriction * Time.deltaTime), 0f, Mathf.Infinity);
 
 		//apply push force
 		myRB.AddForce(pushDir);
@@ -138,30 +143,50 @@ public class TortoiseBehavior : MonoBehaviour
 		float horizontalDistanceToPlayer = Mathf.Abs(References.theHero.transform.position.x - transform.position.x);
 
 		//if we're in range, charge
-		if (verticalDistanceToPlayer <= verticalSearchRange && horizontalDistanceToPlayer <= horizontalSearchRange)
+		if (verticalDistanceToPlayer <= verticalSearchRange && horizontalDistanceToPlayer <= horizontalSearchRange && !isDead)
 		{
 			isPatrolling = false;
 		}
 	}
-
+	
 	void Charge()
 	{
-		if (false) ;
-				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
-				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
-				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
-				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
-				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
-				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
-				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
-				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
-				//CHANGE ISCHARGING TO TRUE IF THE TIMER IS COMPLETE
+
+		//if still winding up
+		if (!isPatrolling && !isCharging)		
+		{
+			//keep us still
+			myRB.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+		}
+
+		//charge if we've stopped patrolling for at least the windup time
+		if (timeSinceStoppedPatrolling >= chargeWindupTime)
+		{
+
+			//(plays once at beginning of charge)
+			if (!isCharging)
+			{
+				//tell everyone we're charging
+				isCharging = true;
+
+				//make us throwable
+				gameObject.AddComponent<ThrowableObjectBehavior>();
+
+				//unfreeze us
+				myRB.constraints = RigidbodyConstraints2D.None;
+
+				//launch us at player
+				myRB.velocity = (References.theHero.transform.position - transform.position).normalized * chargeSpeed;
+			}
+
+		}
+		
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		//check if we're touching a stop point and change direction if we are (if we haven't too recently)
-		if (collision.gameObject.layer == LayerMask.NameToLayer("TortoiseStopPoint"))
+		if (collision.gameObject.layer == LayerMask.NameToLayer("TortoiseStopPoint") && isPatrolling)
 		{
 			//say we're changing direction
 			timeSinceDirectionChange = 0;
@@ -188,11 +213,27 @@ public class TortoiseBehavior : MonoBehaviour
 
 	void Die(Collision2D impact)
 	{
+		//unfreeze in case we're frozen
+		gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+		
+		//if we're throwable
+		if (gameObject.GetComponent<ThrowableObjectBehavior>() != null)
+		{
+			//get dropped
+			References.theHero.GetComponent<CursorBehavior>().DropIt();
+
+			//destroy our Throwability
+			Destroy(gameObject.GetComponent<ThrowableObjectBehavior>());
+		}
+
 		//disable collider
 		GetComponent<Collider2D>().enabled = false;
 
 		//give it a velocity and rotation
 		myRB.velocity = new Vector2((impact.relativeVelocity.x < 0 ? -1 : 1) * horizontalDeathFlingOffset, verticalDeathFlingOffset);
 		myRB.angularVelocity = rotationalDeathFlingOffset;
+
+		//tell everyone we're dead
+		isDead = true;
 	}
 }
