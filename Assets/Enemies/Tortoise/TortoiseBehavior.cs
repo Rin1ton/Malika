@@ -81,7 +81,6 @@ public class TortoiseBehavior : MonoBehaviour
 			!isCharging)
 		{
 			timeSinceStoppedPatrolling += Time.deltaTime;
-			Debug.Log("nice");
 		}
 	}
 

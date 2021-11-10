@@ -137,6 +137,9 @@ public class GoombaBehavior : MonoBehaviour
 
 	void Die(Collision2D impact)
 	{
+		//unfreeze our rotation
+		gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+
 		//disable collider
 		GetComponent<Collider2D>().enabled = false;
 
