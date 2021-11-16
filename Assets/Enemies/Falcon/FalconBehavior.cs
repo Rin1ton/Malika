@@ -11,6 +11,7 @@ public class FalconBehavior : MonoBehaviour
 	Vector3 movementVector = new Vector3(-5, 0, 0);
 	bool isAsleep = true;
 	bool isSwooping = false;
+	bool hasSwooped = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -45,17 +46,17 @@ public class FalconBehavior : MonoBehaviour
 	{
 		//if we've been on camera and we're not anymore, destroy our game object
 		if (!gameObject.GetComponent<SpriteRenderer>().isVisible && !isAsleep)
-			Destroy(transform.parent.gameObject);
+			;// Destroy(transform.parent.gameObject);
 	}
 
 	void Swoop()
 	{
 		//check if we should swoop
-		if (!isSwooping)
-			isSwooping = Mathf.Abs(transform.position.x - References.theHero.transform.position.x) < minHorizontalDistanceToSwoop;
-
-		//
-		Debug.Log(Mathf.Abs(transform.position.x - References.theHero.transform.position.x));
+		if (!hasSwooped && Mathf.Abs(transform.position.x - References.theHero.transform.position.x) < minHorizontalDistanceToSwoop - 1.5f)
+		{
+			isSwooping = true;
+			hasSwooped = true;
+		}
 
 		//if we should be swooping...
 		if (isSwooping)
@@ -71,7 +72,7 @@ public class FalconBehavior : MonoBehaviour
 			transform.position = new Vector3(transform.position.x, newY, 0);
 
 			//
-			isSwooping = Mathf.Abs(transform.position.x - swoopPoint.x) < minHorizontalDistanceToSwoop;
+			isSwooping = Mathf.Abs(transform.position.x - swoopPoint.x) <= minHorizontalDistanceToSwoop - 1.5f;
 		} else
 		{
 			//if not swooping, make sure we stay level
