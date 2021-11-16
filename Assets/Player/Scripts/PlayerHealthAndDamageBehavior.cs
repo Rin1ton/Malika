@@ -42,7 +42,8 @@ public class PlayerHealthAndDamageBehavior : MonoBehaviour
 	private void OnCollisionStay2D(Collision2D collision)
 	{
 		if (collision.gameObject.GetComponent<TortoiseBehavior>() != null ||
-			collision.gameObject.GetComponent<GoombaBehavior>() != null)
+			collision.gameObject.GetComponent<GoombaBehavior>() != null ||
+			collision.gameObject.GetComponent<FalconBehavior>() != null)
 			TakeDamage(collision);
 	}
 
