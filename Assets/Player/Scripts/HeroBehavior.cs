@@ -23,7 +23,7 @@ public class HeroBehavior : MonoBehaviour
 	readonly float playerFriction = 20;
 	
 	//Jump
-	readonly float jumpHeight = 11;
+	readonly float jumpHeight = 12.5f;
 	readonly float hardJumpCooldown = 0.045f;
 	readonly float coyoteTime = 0.2f;
 	bool jumpReady = true;
