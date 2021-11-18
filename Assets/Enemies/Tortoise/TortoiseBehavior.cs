@@ -22,8 +22,7 @@ public class TortoiseBehavior : MonoBehaviour
 	readonly float horizontalSearchRange = 4;
 	readonly float verticalSearchRange = 0.5f;
 	readonly float chargeWindupTime = 0.8f;
-	readonly float chargeSpeed = 15;
-	readonly float bouncinessAfterCharge = 10;
+	readonly float chargeSpeed = 18;
 	float timeSinceStoppedPatrolling = 0;
 	bool isPatrolling = true;
 	bool isCharging = false;

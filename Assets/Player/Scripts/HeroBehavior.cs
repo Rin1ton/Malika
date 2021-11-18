@@ -19,7 +19,7 @@ public class HeroBehavior : MonoBehaviour
 
 	//Running
 	readonly float movementForce = 1500;
-	readonly float playerTopSpeed = 6;
+	readonly float playerTopSpeed = 4.75f;
 	readonly float playerFriction = 20;
 	
 	//Jump
@@ -112,7 +112,7 @@ public class HeroBehavior : MonoBehaviour
 			pushDir = new Vector2(wishDir.x, 0) * movementForce * Time.deltaTime;
 		
 		//give us friction
-		if (Vector2.Dot(wishDir, myRB.velocity) <= 0 && myRB.velocity.magnitude != 0 && isGrounded)
+		if (Vector2.Dot(wishDir, myRB.velocity) <= 0 && myRB.velocity.magnitude != 0 && isGrounded || isGrounded && myRB.velocity.magnitude > playerTopSpeed)
 			myRB.velocity = myRB.velocity.normalized * 
 							Mathf.Clamp((myRB.velocity.magnitude - playerFriction * Time.deltaTime), 0f, Mathf.Infinity);
 

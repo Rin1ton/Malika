@@ -10,7 +10,7 @@ public class FalconBehavior : MonoBehaviour
 	bool isAsleep = true;
 
 	//Swooping
-	readonly float minHorizontalDistanceToSwoop = 7.5f;
+	readonly float minHorizontalDistanceToSwoop = 4.25f;
 	Vector3 swoopPoint = new Vector3(0, 0, 1);					//as long as swoopPoint.z != 0, it isn't initialized with useful data
 	Vector3 movementVector = new Vector3(-5, 0, 0);
 	bool isSwooping = false;
