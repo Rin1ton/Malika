@@ -84,10 +84,21 @@ public class CursorBehavior : MonoBehaviour
 		{
 			//get our object's rigidbody
 			heldObjectRigidBody = closestCollider.gameObject.GetComponent<Rigidbody2D>();
-
+			
 			//tell object it's been grabbed
 			if (heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>() != null)
+			{
 				heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>().BecomeGrabbed();
+			}
+
+			//if it's a beehive, anger it and lose the reference
+			if (heldObjectRigidBody.GetComponent<BeehiveBehavior>() != null)
+			{
+				Debug.Log("sursor found the beehive");
+				heldObjectRigidBody.GetComponent<BeehiveBehavior>().Anger();
+				heldObjectRigidBody = null;
+			}
+
 		}
 
 		//let go if not holding the button anymore (plays once at the end of grab)
