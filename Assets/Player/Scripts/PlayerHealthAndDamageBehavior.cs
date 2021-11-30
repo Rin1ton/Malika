@@ -43,7 +43,9 @@ public class PlayerHealthAndDamageBehavior : MonoBehaviour
 	{
 		if (collision.gameObject.GetComponent<TortoiseBehavior>() != null ||
 			collision.gameObject.GetComponent<GoombaBehavior>() != null ||
-			collision.gameObject.GetComponent<FalconBehavior>() != null)
+			collision.gameObject.GetComponent<FalconBehavior>() != null ||
+			collision.gameObject.GetComponent<BeehiveBehavior>() != null ||
+			collision.gameObject.GetComponent<BeeBehavior>() != null )
 			TakeDamage(collision);
 	}
 

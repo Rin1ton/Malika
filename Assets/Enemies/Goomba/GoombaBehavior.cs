@@ -7,6 +7,8 @@ public class GoombaBehavior : MonoBehaviour
 	//housekeeping
 	GroundCheckScript myGroundChecker;
 	ThrowableObjectBehavior myThrowability;
+	SpriteRenderer mySR;
+	public bool isAsleep;
 
 	//moving
 	readonly float defaultStartDirection = -1;
@@ -34,6 +36,9 @@ public class GoombaBehavior : MonoBehaviour
 		//get my rigidbody
 		myRB = gameObject.GetComponent<Rigidbody2D>();
 
+		//get our sprite renderer
+		mySR = gameObject.GetComponent<SpriteRenderer>();
+
 		//initialize wishDir
 		wishDir = wishXMovement != 0 ? new Vector2(wishXMovement, 0) : new Vector2(defaultStartDirection, 0);
 
@@ -42,26 +47,49 @@ public class GoombaBehavior : MonoBehaviour
 
 		//get my throwability
 		myThrowability = GetComponent<ThrowableObjectBehavior>();
+
+		//sleep our RB if we're starting asleep
+		if (isAsleep)
+			myRB.Sleep();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		Timers();
-		if (myThrowability != null)
-		if (!myThrowability.isGrabbed)
+		if (isAsleep)
+			CheckIfShouldWakeUp();
+		if (!isAsleep)
 		{
-			ChangeDirection();
+			Timers();
+			if (myThrowability != null)
+				if (!myThrowability.isGrabbed)
+				{
+					ChangeDirection();
+				}
 		}
 	}
 
 	private void FixedUpdate()
 	{
-		if (myThrowability != null)
-		if (!myThrowability.isGrabbed)
+		if (!isAsleep)
 		{
-			Move();
-			CounterSlope();
+			if (myThrowability != null)
+				if (!myThrowability.isGrabbed)
+				{
+					Move();
+					CounterSlope();
+				}
+		}
+	}
+
+	void CheckIfShouldWakeUp()
+	{
+		//if we're visible, wake up
+		if (mySR.isVisible)
+		{
+			//wake up
+			isAsleep = false;
+			myRB.WakeUp();
 		}
 	}
 

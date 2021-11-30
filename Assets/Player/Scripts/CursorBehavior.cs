@@ -68,7 +68,7 @@ public class CursorBehavior : MonoBehaviour
 			//check if the object we're looking as is closer to the cursor than any other we've checked so far
 			//as well as check to see if it has a throwableobject script
 			if (distanceToClosestObject > Vector2.Distance(cursorPositionInWorld, collidersNearCursor[colliderBeingChecked].transform.position) && 
-				collidersNearCursor[colliderBeingChecked].gameObject.GetComponent<ThrowableObjectBehavior>() != null)
+				collidersNearCursor[colliderBeingChecked].gameObject.GetComponent<Rigidbody2D>() != null)
 			{
 				//set our new closest object
 				distanceToClosestObject = Vector2.Distance(cursorPositionInWorld, collidersNearCursor[colliderBeingChecked].transform.position);
@@ -88,14 +88,21 @@ public class CursorBehavior : MonoBehaviour
 			//tell object it's been grabbed
 			if (heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>() != null)
 			{
+				Debug.Log("nice");
 				heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>().BecomeGrabbed();
 			}
 
 			//if it's a beehive, anger it and lose the reference
 			if (heldObjectRigidBody.GetComponent<BeehiveBehavior>() != null)
 			{
-				Debug.Log("sursor found the beehive");
 				heldObjectRigidBody.GetComponent<BeehiveBehavior>().Anger();
+				heldObjectRigidBody = null;
+			}
+
+			//if it's a bee, kill it then lose the reference
+			if (heldObjectRigidBody.GetComponent<BeeBehavior>() != null)
+			{
+
 				heldObjectRigidBody = null;
 			}
 
@@ -105,7 +112,8 @@ public class CursorBehavior : MonoBehaviour
 		if (Input.GetKeyUp(References.telekinesesButton) && heldObjectRigidBody != null)
 		{
 			//tell object it's been released
-			heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>().BecomeReleased();
+			if (heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>() != null)
+				heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>().BecomeReleased();
 
 			//reset held object to null
 			heldObjectRigidBody = null;
@@ -117,9 +125,12 @@ public class CursorBehavior : MonoBehaviour
 		//move the object to the cursor constantly if we have an object
 		if (heldObjectRigidBody != null && Input.GetKey(References.telekinesesButton))
 		{
-			//move the object to the cursor
-			heldObjectRigidBody.velocity = (cursorPositionInWorld - (new Vector2(heldObjectRigidBody.transform.position.x, heldObjectRigidBody.transform.position.y)
-			/*get rid of this bit when we have better objects*/ + heldObjectRigidBody.gameObject.GetComponent<Collider2D>().offset / 2)/**/) * maxGrabFollowSpeed * Time.fixedDeltaTime;
+			if (heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>() != null)
+			{
+				//move the object to the cursor
+				heldObjectRigidBody.velocity = (cursorPositionInWorld - (new Vector2(heldObjectRigidBody.transform.position.x, heldObjectRigidBody.transform.position.y)
+				/*get rid of this bit when we have better objects*/ + heldObjectRigidBody.gameObject.GetComponent<Collider2D>().offset / 2)/**/) * maxGrabFollowSpeed * Time.fixedDeltaTime;
+			}
 		}
 	}
 
