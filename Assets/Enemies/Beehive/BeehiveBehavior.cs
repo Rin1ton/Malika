@@ -6,36 +6,71 @@ public class BeehiveBehavior : MonoBehaviour
 {
 
 	readonly float beeForwardOffset = -0.1f;
+	readonly float beeSpawnCoolDown = 1;
+	readonly float waitToSpawnFirstBee = 0.75f;
 	public GameObject beePrefab;
-	bool isDead =  false;
 	Rigidbody2D myRB;
+	SpriteRenderer mySR;
+	bool seenYet = false;
 
 	//Dying
 	readonly float horizontalDeathFlingOffset = 7;
 	readonly float verticalDeathFlingOffset = 10;
 	readonly float rotationalDeathFlingOffset = 100;
 
+	//timers
+	float timeSinceSpawnedBee = Mathf.Infinity;
+
 	// Start is called before the first frame update
 	void Start()
 	{
+		//get myRB
 		myRB = gameObject.GetComponent<Rigidbody2D>();
+
+		//get mySR
+		mySR = gameObject.GetComponent<SpriteRenderer>();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		
+		Timers();
+		CheckIfSeenForFirstTime();
+	}
+
+	void Timers()
+	{
+		if (timeSinceSpawnedBee <= beeSpawnCoolDown)
+			timeSinceSpawnedBee += Time.deltaTime;
+	}
+
+	void CheckIfSeenForFirstTime()
+	{
+		if (mySR.isVisible && !seenYet)
+		{
+			seenYet = true;
+			StartCoroutine(DelayedAnger());
+		}
 	}
 
 	public void Anger()
 	{
-		if (beePrefab != null)
+		//spawn bee if we haven't just done it
+		if (beePrefab != null && timeSinceSpawnedBee >= beeSpawnCoolDown)
 		{
+			//tell others we've spawned a bee
+			timeSinceSpawnedBee = 0;
+
+			//spawn bee
 			GameObject thisBee = Instantiate(beePrefab, gameObject.transform, true);
 			thisBee.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, beeForwardOffset);
 		}
-		else
-			Debug.LogError("No Bee Prefab!!!");
+	}
+
+	IEnumerator DelayedAnger()
+	{
+		yield return new WaitForSeconds(waitToSpawnFirstBee);
+		Anger();
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision)
@@ -55,9 +90,6 @@ public class BeehiveBehavior : MonoBehaviour
 
 	void Die(Collision2D impact)
 	{
-		//tell everyone we're dead
-		isDead = true;
-
 		//unfreeze our movement
 		gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 

@@ -98,11 +98,10 @@ public class CursorBehavior : MonoBehaviour
 				heldObjectRigidBody.GetComponent<BeehiveBehavior>().Anger();
 				heldObjectRigidBody = null;
 			}
-
 			//if it's a bee, kill it then lose the reference
-			if (heldObjectRigidBody.GetComponent<BeeBehavior>() != null)
+			else if (heldObjectRigidBody.GetComponent<BeeBehavior>() != null)
 			{
-
+				heldObjectRigidBody.GetComponent<BeeBehavior>().Die();
 				heldObjectRigidBody = null;
 			}
 
