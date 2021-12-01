@@ -12,16 +12,16 @@ public class CameraBehavior : MonoBehaviour
 	SpriteRenderer herosSpriteRenderer;
 
 	//my bars
+	readonly float barLetterBoxOffset = 2;
 	public GameObject myTopBar, myBottomBar;
-	float myTopBarDefaultYPosition;
-	float myBottomBarDefaultYPosition;
+	Transform myTopBarDefaultPosition, myBottomBarDefaultPosition;
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		//get my bars' default position
-		myTopBarDefaultYPosition = myTopBar.transform.position.y;
-		myBottomBarDefaultYPosition = myBottomBar.transform.position.x;
+		myTopBarDefaultPosition = myTopBar.transform;
+		myBottomBarDefaultPosition = myBottomBar.transform;
 
 		//get the Hero's sprite renderer
 		herosSpriteRenderer = References.theHero.GetComponent<SpriteRenderer>();
@@ -40,25 +40,50 @@ public class CameraBehavior : MonoBehaviour
 	void MoveCamera()
 	{
 		//save our lerped position
-		Vector3 lerpedCameraPos = Vector2.Lerp(transform.position, References.theHero.transform.position, cameraSpeed * Time.deltaTime * (herosSpriteRenderer.isVisible ? 1 : cameraSpeedBoost));
+		Vector3 lerpedCameraPos = Vector2.Lerp(transform.position, 
+												References.theHero.transform.position, 
+												cameraSpeed * Time.deltaTime * (herosSpriteRenderer.isVisible ? 1 : cameraSpeedBoost));
 
 		//apply our lerped position and apply camera offset
-		transform.position = new Vector3(lerpedCameraPos.x + cameraHorizontalOffset * Time.deltaTime, lerpedCameraPos.y + cameraVerticalOffset * Time.deltaTime, transform.position.z);
-	}
-
-	public void EngageLetterbox()
-	{
-		
-	}
-
-	public void DisengageLetterbox()
-	{
-
+		transform.position = new Vector3(lerpedCameraPos.x + cameraHorizontalOffset * Time.deltaTime, 
+											lerpedCameraPos.y + cameraVerticalOffset * Time.deltaTime, 
+											transform.position.z);
 	}
 
 	void MoveLetterbox()
 	{
+		if (References.isInCutscene)
+		{
+			//save our lerped position
+			Vector3 lerpedTopBarPosition = Vector2.Lerp(myTopBar.transform.position, 
+														myTopBarDefaultPosition.position + new Vector3(0, -barLetterBoxOffset, 0), 
+														cameraSpeed * Time.deltaTime);
 
+			//save our lerped position
+			Vector3 lerpedBottomBarPosition = Vector2.Lerp(myBottomBar.transform.position, 
+														myBottomBarDefaultPosition.position + new Vector3(0, barLetterBoxOffset, 0), 
+														cameraSpeed * Time.deltaTime);
+
+			//move our letterboxes
+			myTopBar.transform.position = lerpedTopBarPosition;
+			myBottomBar.transform.position = lerpedBottomBarPosition;
+		}
+		else
+		{
+			//save our lerped position
+			Vector3 lerpedTopBarPosition = Vector2.Lerp(myTopBar.transform.position,
+														myTopBarDefaultPosition.position,
+														cameraSpeed * Time.deltaTime);
+
+			//save our lerped position
+			Vector3 lerpedBottomBarPosition = Vector2.Lerp(myBottomBar.transform.position,
+														myBottomBarDefaultPosition.position,
+														cameraSpeed * Time.deltaTime);
+
+			//move our letterboxes
+			myTopBar.transform.position = lerpedTopBarPosition;
+			myBottomBar.transform.position = lerpedBottomBarPosition;
+		}
 	}
 
 }
