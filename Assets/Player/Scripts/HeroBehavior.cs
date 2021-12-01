@@ -11,7 +11,7 @@ public class HeroBehavior : MonoBehaviour
 	Vector2 pushDir;
 
 	//Grounding
-	readonly float maxGroundAngle = 46;
+	readonly float maxGroundAngle = 55;
 	float currentGroundAngle = 0;
 	Vector2 currentGround = Vector2.zero;
 	bool isGrounded = false;
@@ -19,7 +19,7 @@ public class HeroBehavior : MonoBehaviour
 
 	//Running
 	readonly float movementForce = 1500;
-	readonly float playerTopSpeed = 4.75f;
+	readonly float playerTopSpeed = 3.85f;
 	readonly float playerFriction = 20;
 	
 	//Jump
@@ -31,7 +31,6 @@ public class HeroBehavior : MonoBehaviour
 
 	//RocketBoots
 	bool RocketBootsReady = true;
-
 
 	private void Awake()
 	{
@@ -50,16 +49,24 @@ public class HeroBehavior : MonoBehaviour
 	void Update()
 	{
 		Timers();
-		Jump();
-		RocketBoots();
+		if (!References.isInCutscene)
+		{
+			Jump();
+			RocketBoots();
+		}
 		CheckIfGrounded();
 	}
 
 	private void FixedUpdate()
 	{
 		CounterSlope();
-		Movement();
-		ResetJump();
+		if (!References.isInCutscene)
+		{
+			Movement();
+			ResetJump();
+		}
+		else
+			CutsceneFriction();
 		MyLateUpdate();             //HAS TO BE LAST IN FIXED UPDATE
 	}
 
@@ -111,13 +118,19 @@ public class HeroBehavior : MonoBehaviour
 		if (Vector2.Dot(wishDir, myRB.velocity) < 0 || Mathf.Abs(isGrounded ? myRB.velocity.magnitude : myRB.velocity.x) < playerTopSpeed)
 			pushDir = new Vector2(wishDir.x, 0) * movementForce * Time.deltaTime;
 		
-		//give us friction
+		//give us friction and limit our topspeed
 		if (Vector2.Dot(wishDir, myRB.velocity) <= 0 && myRB.velocity.magnitude != 0 && isGrounded || isGrounded && myRB.velocity.magnitude > playerTopSpeed)
 			myRB.velocity = myRB.velocity.normalized * 
 							Mathf.Clamp((myRB.velocity.magnitude - playerFriction * Time.deltaTime), 0f, Mathf.Infinity);
 
 		//apply our force
 		myRB.AddForce(pushDir);
+	}
+
+	void CutsceneFriction()
+	{
+		myRB.velocity = myRB.velocity.normalized *
+							Mathf.Clamp((myRB.velocity.magnitude - playerFriction * Time.deltaTime), 0f, Mathf.Infinity);
 	}
 
 	void Jump()

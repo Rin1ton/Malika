@@ -135,8 +135,8 @@ public class CursorBehavior : MonoBehaviour
 
 	public void DropIt()
 	{
-		//drop the thing;
-		if (heldObjectRigidBody != null)
+		//drop the thing if it can be dropped
+		if (heldObjectRigidBody != null && heldObjectRigidBody.gameObject.GetComponent<ThrowableObjectBehavior>() != null)
 			heldObjectRigidBody.gameObject.GetComponent<ThrowableObjectBehavior>().BecomeReleased();
 		heldObjectRigidBody = null;
 	}

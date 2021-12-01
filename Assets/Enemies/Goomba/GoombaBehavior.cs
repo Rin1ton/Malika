@@ -12,7 +12,7 @@ public class GoombaBehavior : MonoBehaviour
 
 	//moving
 	readonly float defaultStartDirection = -1;
-	readonly float goombaTopSpeed = 3f;
+	readonly float goombaTopSpeed = 4.25f;
 	readonly float movementForce = 3000;
 	readonly float changeDirectionStopThreshold = 0.8f;
 	readonly float goombaFriction = 20;

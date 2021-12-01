@@ -9,7 +9,7 @@ public class TortoiseBehavior : MonoBehaviour
 
 	//moving
 	readonly float defaultStartDirection = -1;
-	readonly float tortoiseTopSpeed = 2f;
+	readonly float tortoiseTopSpeed = 3.5f;
 	readonly float movementForce = 3000;
 	readonly float changeDirectionStopThreshold = 0.8f;
 	readonly float tortoiseFriction = 20;
@@ -21,7 +21,7 @@ public class TortoiseBehavior : MonoBehaviour
 	//attacking
 	readonly float horizontalSearchRange = 4;
 	readonly float verticalSearchRange = 0.5f;
-	readonly float chargeWindupTime = 0.8f;
+	readonly float chargeWindupTime = 0.5f;
 	readonly float chargeSpeed = 18;
 	float timeSinceStoppedPatrolling = 0;
 	bool isPatrolling = true;
