@@ -15,6 +15,8 @@ public class CameraBehavior : MonoBehaviour
 	readonly float barLetterBoxOffset = 2.75f;
 	public GameObject myTopBar, myBottomBar;
 	Vector3 myTopBarDefaultPosition, myBottomBarDefaultPosition;
+	Vector3 bugOffset = new Vector3(23.37f, 2.04f, 0);
+	Vector3 myInitialPosition;
 
 	// Start is called before the first frame update
 	void Start()
@@ -22,6 +24,17 @@ public class CameraBehavior : MonoBehaviour
 		//get my bars' default position
 		myTopBarDefaultPosition = myTopBar.transform.position;
 		myBottomBarDefaultPosition = myBottomBar.transform.position;
+
+		//get my initial position
+		myInitialPosition = transform.position;
+		//something is wrong here
+		//something is wrong here
+		//something is wrong here
+		//something is wrong here
+		//something is wrong here
+		//something is wrong here
+		//something is wrong here
+		//something is wrong here
 
 		//get the Hero's sprite renderer
 		herosSpriteRenderer = References.theHero.GetComponent<SpriteRenderer>();
@@ -55,8 +68,13 @@ public class CameraBehavior : MonoBehaviour
 		if (References.isInCutscene)
 		{
 			//get the position we should move the letterboxes to
-			Vector3 moveTopBarTo = ((myTopBarDefaultPosition + new Vector3(0, -barLetterBoxOffset, 0)) - myTopBar.transform.position) * Time.deltaTime * 2 + myTopBar.transform.position;
-			Vector3 moveBottomBarTo = ((myBottomBarDefaultPosition + new Vector3(0, +barLetterBoxOffset, 0)) - myBottomBar.transform.position) * Time.deltaTime * 2 + myBottomBar.transform.position;
+			Vector3 moveTopBarTo = 
+				((myTopBarDefaultPosition + new Vector3(0, -barLetterBoxOffset, 0) + new Vector3(transform.position.x, transform.position.y, 0)) + bugOffset
+				- myTopBar.transform.position) * Time.deltaTime + myTopBar.transform.position;
+
+			Vector3 moveBottomBarTo = 
+				((myBottomBarDefaultPosition + new Vector3(0, +barLetterBoxOffset, 0) + new Vector3(transform.position.x, transform.position.y, 0)) + bugOffset
+				- myBottomBar.transform.position) * Time.deltaTime + myBottomBar.transform.position;
 
 			//move our letterboxes
 			myTopBar.transform.position = moveTopBarTo;
@@ -68,8 +86,13 @@ public class CameraBehavior : MonoBehaviour
 		else
 		{
 			//get the position we should move the letterboxes to
-			Vector3 moveTopBarTo = (myTopBarDefaultPosition - myTopBar.transform.position) * Time.deltaTime * 2 + myTopBar.transform.position;
-			Vector3 moveBottomBarTo = (myBottomBarDefaultPosition - myBottomBar.transform.position) * Time.deltaTime  * 2 + myBottomBar.transform.position;
+			Vector3 moveTopBarTo = 
+				((myTopBarDefaultPosition + new Vector3(transform.position.x, transform.position.y, 0)) + bugOffset
+				- myTopBar.transform.position) * Time.deltaTime + myTopBar.transform.position;
+
+			Vector3 moveBottomBarTo = 
+				((myBottomBarDefaultPosition + new Vector3(transform.position.x, transform.position.y, 0)) + bugOffset
+				- myBottomBar.transform.position) * Time.deltaTime + myBottomBar.transform.position;
 
 			//move our letterboxes
 			myTopBar.transform.position = moveTopBarTo;
