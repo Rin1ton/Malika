@@ -69,7 +69,7 @@ public class FalconBehavior : MonoBehaviour
 	{
 		//if we've been on camera and we're not anymore, destroy our game object
 		if (!gameObject.GetComponent<SpriteRenderer>().isVisible && !isAsleep && timeSinceOffCamera > minTimeOffCameraToDie)
-			; // Destroy(transform.parent.gameObject);
+			Destroy(transform.parent.gameObject);
 	}
 
 	void Swoop()

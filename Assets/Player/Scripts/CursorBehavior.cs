@@ -15,10 +15,6 @@ public class CursorBehavior : MonoBehaviour
 	Collider2D closestCollider;
 	float timeSinceStartedHoldingTelekinesesButton = 0;
 
-	//Jab
-	readonly float jabForce = 10;
-	readonly float maxTimeToHoldButtonForJab = 0.3f;
-
 	//Grab
 	readonly float maxGrabFollowSpeed = 525;
 

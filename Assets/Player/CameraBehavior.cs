@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraBehavior : MonoBehaviour
 {
 
-	readonly float cameraSpeed = 1;
+	readonly float cameraSpeed = 2;
 	readonly float cameraSpeedBoost = 5;
 	readonly float cameraVerticalOffset = 1.6f;
 	readonly float cameraHorizontalOffset = 1.8f;
@@ -27,14 +27,6 @@ public class CameraBehavior : MonoBehaviour
 
 		//get my initial position
 		myInitialPosition = new Vector3(transform.position.x, transform.position.y, 0);
-		//something is wrong here
-		//something is wrong here
-		//something is wrong here
-		//something is wrong here
-		//something is wrong here
-		//something is wrong here
-		//something is wrong here
-		//something is wrong here
 
 		//get the Hero's sprite renderer
 		herosSpriteRenderer = References.theHero.GetComponent<SpriteRenderer>();
@@ -48,7 +40,6 @@ public class CameraBehavior : MonoBehaviour
 	{
 		MoveCamera();
 		MoveLetterbox();
-		Debug.Log(myInitialPosition);
 	}
 
 	void MoveCamera()
