@@ -1,0 +1,5 @@
+Same shading note as with the rock.
+
+Something like V2 would be better since it allows the player to tell that the Roll-der is moving.
+
+Update: V5 is probably best.
