@@ -30,13 +30,17 @@ public class CursorBehavior : MonoBehaviour
 	void Update()
 	{
 		Timers();
-		SetTelekinesesCursorPosition();			//has to happen before any telekineses moves
-		ObjectGrabAndThrow();
+		if (!References.isInCutscene)
+		{
+			SetTelekinesesCursorPosition();			//has to happen before any telekineses moves
+			ObjectGrabAndThrow();
+		}
 	}
 
 	private void FixedUpdate()
 	{
-		MoveGrabbedObjectToCursor();
+		if (!References.isInCutscene)
+			MoveGrabbedObjectToCursor();
 	}
 
 	void Timers()
@@ -84,7 +88,6 @@ public class CursorBehavior : MonoBehaviour
 			//tell object it's been grabbed
 			if (heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>() != null)
 			{
-				Debug.Log("nice");
 				heldObjectRigidBody.GetComponent<ThrowableObjectBehavior>().BecomeGrabbed();
 			}
 

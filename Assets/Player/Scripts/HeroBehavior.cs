@@ -123,7 +123,6 @@ public class HeroBehavior : MonoBehaviour
 		//set push direction to be our keyboard input
 		if (Vector2.Dot(wishDir, myVelocityRelativeToGround) < 0 || Mathf.Abs(isGrounded ? myVelocityRelativeToGround.magnitude : myVelocityRelativeToGround.x) < playerTopSpeed)
 			pushDir = new Vector2(wishDir.x, 0) * movementForce * Time.deltaTime;
-		Debug.Log(Vector2.Dot(wishDir, myVelocityRelativeToGround) < 0);
 
 		//give us friction and limit our topspeed
 		if (Vector2.Dot(wishDir, myVelocityRelativeToGround) <= 0 && myVelocityRelativeToGround.magnitude != 0 && isGrounded || isGrounded && myVelocityRelativeToGround.magnitude > playerTopSpeed)

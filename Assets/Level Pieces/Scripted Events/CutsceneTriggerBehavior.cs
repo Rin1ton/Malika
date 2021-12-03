@@ -7,7 +7,8 @@ public class CutsceneTriggerBehavior : MonoBehaviour
 	//tweakables
 	public float audioPlayDelay;
 	public float cutsceneLength;
-
+	//my stop sign thing, if it exists
+	public GameObject myStopSign;
 
 	AudioSource myAS;
 	bool hasBeenTriggered = false;
@@ -42,6 +43,10 @@ public class CutsceneTriggerBehavior : MonoBehaviour
 			//start our length and audio play delay coroutines
 			StartCoroutine(TrackAudioPlayDelay());
 			StartCoroutine(TrackCutsceneLength());
+
+			//give our stopsign throwability if we have one
+			if (myStopSign != null)
+				myStopSign.AddComponent<ThrowableObjectBehavior>();
 		}
 	}
 
