@@ -24,6 +24,17 @@ public class ThrowableObjectBehavior : MonoBehaviour
 	void Update()
 	{
 		CheckToBecomePhysicalWithPlayer();
+		CheckIfGoingTooFast();
+	}
+
+	void CheckIfGoingTooFast()
+	// return false;
+	{
+		if (myRB.velocity.magnitude > maxSpeedToBecomePhysical && isPhysicalWithPlayer && gameObject.GetComponent<TortoiseBehavior>() == null)
+		{
+			isPhysicalWithPlayer = false;
+			Physics2D.IgnoreCollision(References.theHero.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>());
+		}
 	}
 	
 	public void BecomeGrabbed()
