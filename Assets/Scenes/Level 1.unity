@@ -197,6 +197,8 @@ GameObject:
   - component: {fileID: 25645220}
   - component: {fileID: 25645219}
   - component: {fileID: 25645218}
+  - component: {fileID: 25645222}
+  - component: {fileID: 25645223}
   m_Layer: 0
   m_Name: Rollder
   m_TagString: Untagged
@@ -306,6 +308,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &25645222
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25645217}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 4
+--- !u!114 &25645223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25645217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc109d0bdfd7d2f4abde64af850ba02d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &82271240 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8329566779172880174, guid: 2081ea45e3f616447a97318ccbc1bcbb, type: 3}
@@ -947,7 +977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8329566779172880174, guid: 2081ea45e3f616447a97318ccbc1bcbb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.59
+      value: 4.8
       objectReference: {fileID: 0}
     - target: {fileID: 8329566779172880174, guid: 2081ea45e3f616447a97318ccbc1bcbb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1118,7 +1148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8329566779172880174, guid: 2081ea45e3f616447a97318ccbc1bcbb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.651873
+      value: 10.861873
       objectReference: {fileID: 0}
     - target: {fileID: 8329566779172880174, guid: 2081ea45e3f616447a97318ccbc1bcbb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -77805,7 +77835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8329566779172880174, guid: 2081ea45e3f616447a97318ccbc1bcbb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.61
+      value: 4.93
       objectReference: {fileID: 0}
     - target: {fileID: 8329566779172880174, guid: 2081ea45e3f616447a97318ccbc1bcbb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -78410,6 +78440,14 @@ PrefabInstance:
     - target: {fileID: 3751536498764606672, guid: 8a171fab469fa114bb88dec1e22e8661, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751536498764606676, guid: 8a171fab469fa114bb88dec1e22e8661, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 152.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751536498764606676, guid: 8a171fab469fa114bb88dec1e22e8661, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -2.5239277
       objectReference: {fileID: 0}
     - target: {fileID: 3751536498764606677, guid: 8a171fab469fa114bb88dec1e22e8661, type: 3}
       propertyPath: m_CollisionDetection
