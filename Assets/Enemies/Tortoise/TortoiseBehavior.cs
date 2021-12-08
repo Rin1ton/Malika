@@ -37,6 +37,11 @@ public class TortoiseBehavior : MonoBehaviour
 	readonly float rotationalDeathFlingOffset = 100;
 	bool isDead = false;
 
+	//sounds
+	public AudioSource myWindUpSound;
+	public AudioSource myDieSound;
+	public AudioSource myAttackSound;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -141,10 +146,11 @@ public class TortoiseBehavior : MonoBehaviour
 		float verticalDistanceToPlayer = Mathf.Abs(References.theHero.transform.position.y - transform.position.y);
 		float horizontalDistanceToPlayer = Mathf.Abs(References.theHero.transform.position.x - transform.position.x);
 
-		//if we're in range, charge
+		//if we're in range, windup for charge
 		if (verticalDistanceToPlayer <= verticalSearchRange && horizontalDistanceToPlayer <= horizontalSearchRange && !isDead)
 		{
 			isPatrolling = false;
+			myWindUpSound.Play();
 		}
 	}
 	
@@ -170,6 +176,9 @@ public class TortoiseBehavior : MonoBehaviour
 
 				//make us throwable
 				gameObject.AddComponent<ThrowableObjectBehavior>();
+
+				//play sound
+				myAttackSound.Play();
 
 				//unfreeze us
 				myRB.constraints = RigidbodyConstraints2D.None;
@@ -212,6 +221,9 @@ public class TortoiseBehavior : MonoBehaviour
 
 	void Die(Collision2D impact)
 	{
+		//pl;ay our death sound
+		myDieSound.Play();
+
 		//unfreeze in case we're frozen
 		gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
 		

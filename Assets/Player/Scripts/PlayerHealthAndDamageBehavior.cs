@@ -70,7 +70,7 @@ public class PlayerHealthAndDamageBehavior : MonoBehaviour
 		}
 	}
 
-	void Respawn()
+	public void Respawn()
 	{
 		heroHealth = startingHeroHealth;
 		myRB.velocity = Vector2.zero;

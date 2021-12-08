@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3751536498764606676}
   - component: {fileID: 3751536498764606673}
   - component: {fileID: 3758723221246265809}
+  - component: {fileID: 5206326591870498846}
   m_Layer: 0
   m_Name: Faling Tree
   m_TagString: Untagged
@@ -135,7 +136,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0.00000027508918, y: -0.34000018}
-  m_ConnectedAnchor: {x: 152.78, y: -2.5239277}
+  m_ConnectedAnchor: {x: 152.96, y: -2.4339275}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -170,5 +171,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc109d0bdfd7d2f4abde64af850ba02d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5206326591870498846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3751536498764606672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371d99715c0212b48b9826f20f19c1ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

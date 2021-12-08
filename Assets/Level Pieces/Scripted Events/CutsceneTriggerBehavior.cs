@@ -46,7 +46,10 @@ public class CutsceneTriggerBehavior : MonoBehaviour
 
 			//give our stopsign throwability if we have one
 			if (myStopSign != null)
+			{
 				myStopSign.AddComponent<ThrowableObjectBehavior>();
+				myStopSign.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+			}
 		}
 	}
 

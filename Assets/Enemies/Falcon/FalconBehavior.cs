@@ -10,7 +10,8 @@ public class FalconBehavior : MonoBehaviour
 	bool isAsleep = true;
 
 	//Swooping
-	readonly float minHorizontalDistanceToSwoop = 4.25f;
+	readonly float minHorizontalDistanceToSwoop = 4f;
+	readonly float swoopVerticalOffset = -0.75f;
 	Vector3 swoopPoint = new Vector3(0, 0, 1);					//as long as swoopPoint.z != 0, it isn't initialized with useful data
 	Vector3 movementVector = new Vector3(-5, 0, 0);
 	bool isSwooping = false;
@@ -86,7 +87,7 @@ public class FalconBehavior : MonoBehaviour
 		{
 			//if our swoopPoint isn't initialized, initialize it before we use it
 			if (swoopPoint.z != 0)
-				swoopPoint = References.theHero.transform.position;
+				swoopPoint = References.theHero.transform.position + new Vector3(0, swoopVerticalOffset, 0);
 
 			//figure out what our 'y' position should be
 			//math is a bull, and I'm the matadore

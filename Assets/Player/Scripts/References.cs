@@ -19,4 +19,5 @@ public static class References
 	//
 	public static List<GameObject> levelCheckpoints = new List<GameObject>();
 	public static GameObject activeCheckpoint;
+	public static GameObject dollyCameraPosition;
 }
