@@ -15,6 +15,10 @@ public class BeeBehavior : MonoBehaviour
 	readonly float rotationalDeathFlingOffset = 100;
 	bool isDead = false;
 
+	//sounds
+	public AudioSource myIdleSound;
+	public AudioSource myDeathSound;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -64,6 +68,10 @@ public class BeeBehavior : MonoBehaviour
 		//disable collider
 		GetComponent<Collider2D>().enabled = false;
 
+		//play death and mute idel
+		myDeathSound.Play();
+		myIdleSound.mute = true;
+
 		//enable gravity and give it a velocity and rotation
 		myRB.gravityScale = 1;
 		myRB.velocity = new Vector2((References.theHero.transform.position.x > transform.position.x ? -1 : 1) * horizontalDeathFlingOffset, verticalDeathFlingOffset);
@@ -77,6 +85,10 @@ public class BeeBehavior : MonoBehaviour
 	{
 		//disable collider
 		GetComponent<Collider2D>().enabled = false;
+
+		//play death and mute idel
+		myDeathSound.Play();
+		myIdleSound.mute = true;
 
 		//enable gravity and give it a velocity and rotation
 		myRB.gravityScale = 1;

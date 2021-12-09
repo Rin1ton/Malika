@@ -21,6 +21,10 @@ public class BeehiveBehavior : MonoBehaviour
 	//timers
 	float timeSinceSpawnedBee = Mathf.Infinity;
 
+	//sounds
+	public AudioSource myIdleSound;
+	public AudioSource myDeathSound;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -49,6 +53,7 @@ public class BeehiveBehavior : MonoBehaviour
 		if (mySR.isVisible && !seenYet)
 		{
 			seenYet = true;
+			myIdleSound.Play();
 			StartCoroutine(DelayedAnger());
 		}
 	}
@@ -92,6 +97,10 @@ public class BeehiveBehavior : MonoBehaviour
 	{
 		//unfreeze our movement
 		gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
+		//stop sound
+		myIdleSound.mute = true;
+		myDeathSound.Play();
 
 		//disable collider
 		GetComponent<Collider2D>().enabled = false;
