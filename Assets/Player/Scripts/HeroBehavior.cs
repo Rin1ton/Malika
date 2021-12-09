@@ -68,11 +68,12 @@ public class HeroBehavior : MonoBehaviour
 		CounterSlope();
 		if (!References.isInCutscene)
 		{
-			Movement();
+			GetPlayerInput();
 			ResetJump();
 		}
 		else
 			CutsceneFriction();
+		Movement();
 		MyLateUpdate();             //HAS TO BE LAST IN FIXED UPDATE
 	}
 
@@ -112,10 +113,14 @@ public class HeroBehavior : MonoBehaviour
 		}
 	}
 
+	void GetPlayerInput()
+	{
+		//get keyboard input for lateral movement
+		wishDir = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+	}
+
 	void Movement()
 	{
-		//get keyboard input
-		wishDir = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
 		
 		//reset pushdir
 		pushDir = Vector2.zero;
