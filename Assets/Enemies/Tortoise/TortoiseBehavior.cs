@@ -9,20 +9,21 @@ public class TortoiseBehavior : MonoBehaviour
 
 	//moving
 	readonly float defaultStartDirection = -1;
-	readonly float tortoiseTopSpeed = 3.5f;
+	readonly float tortoiseTopSpeed = 2.5f;
 	readonly float movementForce = 3000;
 	readonly float changeDirectionStopThreshold = 0.8f;
 	readonly float tortoiseFriction = 20;
 	public float wishXMovement;
 	Rigidbody2D myRB;
+	SpriteRenderer mySR;
 	Vector2 pushDir;
 	Vector2 wishDir;
 
 	//attacking
 	readonly float horizontalSearchRange = 5.5f;
 	readonly float verticalSearchRange = 1.7f;
-	readonly float chargeWindupTime = 0.5f;
-	readonly float chargeSpeed = 18;
+	readonly float chargeWindupTime = 0.9f;
+	readonly float chargeSpeed = 24;
 	float timeSinceStoppedPatrolling = 0;
 	bool isPatrolling = true;
 	bool isCharging = false;
@@ -42,14 +43,24 @@ public class TortoiseBehavior : MonoBehaviour
 	public AudioSource myDieSound;
 	public AudioSource myAttackSound;
 
+	//animation
+	Animator myAnimator;
+
 	// Start is called before the first frame update
 	void Start()
 	{
 		//get my rigidbody
 		myRB = gameObject.GetComponent<Rigidbody2D>();
 
-		//initialize wishDir
+		//get mySR
+		mySR = GetComponent<SpriteRenderer>();
+
+		//get animator
+		myAnimator = GetComponent<Animator>();
+
+		//initialize wishDir and point our sprite correctly
 		wishDir = wishXMovement != 0 ? new Vector2(wishXMovement, 0) : new Vector2(defaultStartDirection, 0);
+		mySR.flipX = !(wishDir.x < 0);
 
 		//get my ground checker
 		myGroundChecker = GetComponent<GroundCheckScript>();
@@ -137,6 +148,7 @@ public class TortoiseBehavior : MonoBehaviour
 
 			//change direction
 			wishDir = new Vector2(-wishDir.x, 0);
+			mySR.flipX = !mySR.flipX;
 		}
 	}
 
@@ -150,7 +162,13 @@ public class TortoiseBehavior : MonoBehaviour
 		if (verticalDistanceToPlayer <= verticalSearchRange && horizontalDistanceToPlayer <= horizontalSearchRange && !isDead)
 		{
 			isPatrolling = false;
+
+			//play uor sound and anim
 			myWindUpSound.Play();
+			myAnimator.SetBool("isWindingUp", true);
+
+			//face the player
+			mySR.flipX = ((References.theHero.transform.position.x - transform.position.x) > 0);
 		}
 	}
 	
@@ -204,6 +222,7 @@ public class TortoiseBehavior : MonoBehaviour
 
 			//change direction
 			wishDir = new Vector2(-wishDir.x, 0);
+			mySR.flipX = !mySR.flipX;
 		}
 	}
 

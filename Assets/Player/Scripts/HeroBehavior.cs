@@ -36,6 +36,7 @@ public class HeroBehavior : MonoBehaviour
 
 	//sounds
 	public AudioSource myJumpSound;
+	public AudioSource myDoubleJumpSound;
 
 	private void Awake()
 	{
@@ -159,6 +160,9 @@ public class HeroBehavior : MonoBehaviour
 			myRB.velocity = new Vector2(myRB.velocity.x, jumpHeight);
 			jumpReady = false;
 			timeSinceLastJump = 0;
+
+			//play jump osund
+			myJumpSound.Play();
 		}
 
 	}
@@ -183,6 +187,9 @@ public class HeroBehavior : MonoBehaviour
 			myRB.velocity = new Vector2(myRB.velocity.x, jumpHeight);
 			RocketBootsReady = false;
 			timeSinceLastJump = 0;
+
+			//play my sound
+			myDoubleJumpSound.Play();
 		}
 	}
 
