@@ -87,6 +87,12 @@ public class CursorBehavior : MonoBehaviour
 				heldObjectRigidBody.GetComponent<BeeBehavior>().Die();
 				heldObjectRigidBody = null;
 			}
+			//if it's 18wheeler, start it going.
+			else if (heldObjectRigidBody.GetComponent<BigRigBehavior>() != null)
+			{
+				heldObjectRigidBody.GetComponent<BigRigBehavior>().GetGrabbed();
+				heldObjectRigidBody = null;
+			}
 
 		}
 
