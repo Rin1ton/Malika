@@ -5,20 +5,14 @@ using UnityEngine;
 public class CursorBehavior : MonoBehaviour
 {
 
-	//dumb
-	public GameObject MyChest;
-
 	readonly float aimAssistMagnitude = 0.2f;
 	[System.NonSerialized] public Rigidbody2D heldObjectRigidBody;
 	Vector2 cursorPositionInWorld;
 	Collider2D[] collidersNearCursor;
 	Collider2D closestCollider;
-	float timeSinceStartedHoldingTelekinesesButton = 0;
 
 	//Grab
 	readonly float maxGrabFollowSpeed = 525;
-
-	//
 
 	// Start is called before the first frame update
 	void Start()
@@ -29,7 +23,6 @@ public class CursorBehavior : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		Timers();
 		if (!References.isInCutscene)
 		{
 			SetTelekinesesCursorPosition();			//has to happen before any telekineses moves
@@ -42,15 +35,6 @@ public class CursorBehavior : MonoBehaviour
 		if (!References.isInCutscene)
 			MoveGrabbedObjectToCursor();
 	}
-
-	void Timers()
-	{
-		if (Input.GetKey(References.telekinesesButton))
-			timeSinceStartedHoldingTelekinesesButton += Time.deltaTime;
-		if (Input.GetKeyDown(References.telekinesesButton))
-			timeSinceStartedHoldingTelekinesesButton = 0;
-	}
-
 
 	void SetTelekinesesCursorPosition()
 	{

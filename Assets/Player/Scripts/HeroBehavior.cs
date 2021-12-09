@@ -34,6 +34,9 @@ public class HeroBehavior : MonoBehaviour
 	//RocketBoots
 	bool RocketBootsReady = true;
 
+	//sounds
+	public AudioSource myJumpSound;
+
 	private void Awake()
 	{
 		myRB = gameObject.GetComponent<Rigidbody2D>();

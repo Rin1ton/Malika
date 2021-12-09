@@ -30,6 +30,9 @@ public class GoombaBehavior : MonoBehaviour
 	readonly float verticalDeathFlingOffset = 10;
 	readonly float rotationalDeathFlingOffset = 100;
 
+	//sound
+	public AudioSource myDeathSound;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -167,6 +170,9 @@ public class GoombaBehavior : MonoBehaviour
 	{
 		//unfreeze our rotation
 		gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+
+		//play death sound
+		myDeathSound.Play();
 
 		//disable collider
 		GetComponent<Collider2D>().enabled = false;
