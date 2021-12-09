@@ -5,7 +5,7 @@ using UnityEngine;
 public class DollyCameraBehavior : MonoBehaviour
 {
 
-	GameObject myDollyCameraPosition;
+	public GameObject myDollyCameraPosition;
 
 	// Start is called before the first frame update
 	void Start()

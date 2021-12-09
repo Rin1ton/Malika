@@ -19,8 +19,8 @@ public class TortoiseBehavior : MonoBehaviour
 	Vector2 wishDir;
 
 	//attacking
-	readonly float horizontalSearchRange = 4;
-	readonly float verticalSearchRange = 1.2f;
+	readonly float horizontalSearchRange = 5.5f;
+	readonly float verticalSearchRange = 1.7f;
 	readonly float chargeWindupTime = 0.5f;
 	readonly float chargeSpeed = 18;
 	float timeSinceStoppedPatrolling = 0;

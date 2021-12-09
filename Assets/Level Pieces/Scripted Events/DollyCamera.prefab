@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8016428772421918375}
   - component: {fileID: 5531445632149699970}
+  - component: {fileID: 7632899783118777170}
   m_Layer: 0
   m_Name: DollyCamera
   m_TagString: Untagged
@@ -88,3 +89,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7632899783118777170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8393442326641248926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc52748bc6255c4ea1d9b476a921471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myDollyCameraPosition: {fileID: 1372093298463679803}

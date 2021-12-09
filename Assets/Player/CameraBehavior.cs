@@ -32,7 +32,7 @@ public class CameraBehavior : MonoBehaviour
 		herosSpriteRenderer = References.theHero.GetComponent<SpriteRenderer>();
 
 		//set my position
-		transform.position = new Vector3(References.theHero.transform.position.x + cameraHorizontalOffset, References.theHero.transform.position.y + cameraVerticalOffset, transform.position.z);
+		//transform.position = new Vector3(References.theHero.transform.position.x + cameraHorizontalOffset, References.theHero.transform.position.y + cameraVerticalOffset, transform.position.z);
 	}
 
 	// Update is called once per frame
@@ -46,7 +46,7 @@ public class CameraBehavior : MonoBehaviour
 	{
 		//save our lerped position
 		Vector3 lerpedCameraPos = Vector2.Lerp(transform.position, 
-												References.theHero.transform.position, 
+												References.dollyCameraPosition == null ? References.theHero.transform.position : References.dollyCameraPosition.transform.position, 
 												cameraSpeed * Time.deltaTime * (herosSpriteRenderer.isVisible ? 1 : cameraSpeedBoost));
 
 		//apply our lerped position and apply camera offset
