@@ -33,6 +33,9 @@ public class GoombaBehavior : MonoBehaviour
 	//sound
 	public AudioSource myDeathSound;
 
+	//animations
+	Animator myAnimator;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -42,8 +45,12 @@ public class GoombaBehavior : MonoBehaviour
 		//get our sprite renderer
 		mySR = gameObject.GetComponent<SpriteRenderer>();
 
+		//get my animator
+		myAnimator = GetComponent<Animator>();
+
 		//initialize wishDir
 		wishDir = wishXMovement != 0 ? new Vector2(wishXMovement, 0) : new Vector2(defaultStartDirection, 0);
+		mySR.flipX = !(wishDir.x < 0);
 
 		//get my ground checker
 		myGroundChecker = GetComponent<GroundCheckScript>();
@@ -54,6 +61,7 @@ public class GoombaBehavior : MonoBehaviour
 		//sleep our RB if we're starting asleep
 		if (isAsleep)
 			myRB.Sleep();
+
 	}
 
 	// Update is called once per frame
@@ -151,6 +159,7 @@ public class GoombaBehavior : MonoBehaviour
 
 			//change direction
 			wishDir = new Vector2(-wishDir.x, 0);
+			mySR.flipX = !(wishDir.x < 0);
 		}
 	}
 

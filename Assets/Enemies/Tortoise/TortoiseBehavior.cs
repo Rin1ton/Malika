@@ -23,7 +23,8 @@ public class TortoiseBehavior : MonoBehaviour
 	readonly float horizontalSearchRange = 5.5f;
 	readonly float verticalSearchRange = 1.7f;
 	readonly float chargeWindupTime = 0.9f;
-	readonly float chargeSpeed = 24;
+	readonly float chargeSpeed = 20;
+	readonly float chargeVertOffset = 1;
 	float timeSinceStoppedPatrolling = 0;
 	bool isPatrolling = true;
 	bool isCharging = false;
@@ -195,14 +196,15 @@ public class TortoiseBehavior : MonoBehaviour
 				//make us throwable
 				gameObject.AddComponent<ThrowableObjectBehavior>();
 
-				//play sound
+				//play sound and anim
 				myAttackSound.Play();
+				myAnimator.SetBool("isCharging", true);
 
 				//unfreeze us
 				myRB.constraints = RigidbodyConstraints2D.None;
 
 				//launch us at player
-				myRB.velocity = (References.theHero.transform.position - transform.position).normalized * chargeSpeed;
+				myRB.velocity = ((References.theHero.transform.position + new Vector3(0, chargeVertOffset, 0)) - transform.position).normalized * chargeSpeed;
 			}
 
 		}
@@ -242,6 +244,7 @@ public class TortoiseBehavior : MonoBehaviour
 	{
 		//pl;ay our death sound
 		myDieSound.Play();
+		myAnimator.SetBool("isDead", true);
 
 		//unfreeze in case we're frozen
 		gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
