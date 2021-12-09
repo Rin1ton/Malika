@@ -53,9 +53,13 @@ public class BeehiveBehavior : MonoBehaviour
 		if (mySR.isVisible && !seenYet)
 		{
 			seenYet = true;
-			myIdleSound.Play();
 			StartCoroutine(DelayedAnger());
 		}
+
+		if (!mySR.isVisible)
+			myIdleSound.Pause();
+		else if (!myIdleSound.isPlaying)
+			myIdleSound.Play();
 	}
 
 	public void Anger()

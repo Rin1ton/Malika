@@ -45,12 +45,32 @@ public class PlayerHealthAndDamageBehavior : MonoBehaviour
 			collision.gameObject.GetComponent<GoombaBehavior>() != null ||
 			collision.gameObject.GetComponent<FalconBehavior>() != null ||
 			collision.gameObject.GetComponent<BeehiveBehavior>() != null ||
-			collision.gameObject.GetComponent<BeeBehavior>() != null ||
-			collision.gameObject.GetComponent<PassingCarBehavior>() != null)
+			collision.gameObject.GetComponent<BeeBehavior>() != null)
 			TakeDamage(collision);
 	}
 
 	void TakeDamage(Collision2D collision)
+	{
+		if (timeSinceLastDamage >= timeInvincibleAfterDamage)
+		{
+			//damage us
+			heroHealth--;
+
+			if (heroHealth == 0)
+			{
+				Respawn();
+				return;
+			}
+
+			//throw us
+			myRB.velocity = ((gameObject.transform.position - collision.gameObject.transform.position).normalized + (Vector3.up * knockbackVerticalOffset)).normalized * knockbackVelocity;
+
+			//tell others we've taken damage
+			timeSinceLastDamage = 0;
+		}
+	}
+
+	public void TakeDamage(Collider2D collision)
 	{
 		if (timeSinceLastDamage >= timeInvincibleAfterDamage)
 		{

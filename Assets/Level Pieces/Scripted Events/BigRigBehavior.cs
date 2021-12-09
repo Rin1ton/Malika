@@ -9,7 +9,7 @@ public class BigRigBehavior : MonoBehaviour
 	bool hasToStop = false;
 	bool isTouchingPlayer = false;
 	Rigidbody2D myRB;
-	Vector3 accelerationForce = new Vector3(2, 0, 0);
+	Vector3 accelerationForce = new Vector3(25000, 0, 0);
 
 	// Start is called before the first frame update
 	void Start()
@@ -26,7 +26,9 @@ public class BigRigBehavior : MonoBehaviour
 	private void FixedUpdate()
 	{
 		if (hasBeenGrabbed && !hasToStop)
+		{
 			myRB.AddForce(accelerationForce);
+		}
 	}
 
 	public void GetGrabbed()
@@ -44,6 +46,7 @@ public class BigRigBehavior : MonoBehaviour
 		{
 			hasToStop = true;
 			References.isInCutscene = false;
+			myRB.bodyType = RigidbodyType2D.Static;
 		}
 
 		if (collision.gameObject == References.theHero)

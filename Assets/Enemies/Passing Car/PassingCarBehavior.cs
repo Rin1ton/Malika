@@ -9,7 +9,9 @@ public class PassingCarBehavior : MonoBehaviour
 	bool hasStarted = false;
 	SpriteRenderer mySR;
 	Rigidbody2D myRB;
-	
+
+	//my sounds
+	public AudioSource myPassingSound;
 
 	// Start is called before the first frame update
 	void Start()
@@ -25,6 +27,7 @@ public class PassingCarBehavior : MonoBehaviour
 		{
 			hasStarted = true;
 			myRB.velocity = new Vector3(carSpeed, 0, 0);
+			myPassingSound.Play();
 		}
 
 		if (hasStarted && !mySR.isVisible)
@@ -32,4 +35,11 @@ public class PassingCarBehavior : MonoBehaviour
 			Destroy(gameObject);
 		}
 	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject == References.theHero)
+			collision.gameObject.GetComponent<PlayerHealthAndDamageBehavior>().TakeDamage(collision);
+	}
+
 }

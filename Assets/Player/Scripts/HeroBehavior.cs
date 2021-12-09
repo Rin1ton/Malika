@@ -72,7 +72,10 @@ public class HeroBehavior : MonoBehaviour
 			ResetJump();
 		}
 		else
+		{
 			CutsceneFriction();
+			wishDir = Vector3.zero;
+		}
 		Movement();
 		MyLateUpdate();             //HAS TO BE LAST IN FIXED UPDATE
 	}
