@@ -171,7 +171,7 @@ public class GoombaBehavior : MonoBehaviour
 	void TakeDamage(Collision2D collision)
 	{
 		//check if we're hit by something fast enough to take damage
-		if(collision.relativeVelocity.magnitude >= References.throwableMinSpeedToKill)
+		if(collision.relativeVelocity.magnitude >= References.throwableMinSpeedToKill && mySR.isVisible)
 			Die(collision);
 	}
 

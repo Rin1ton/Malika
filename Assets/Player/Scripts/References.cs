@@ -15,6 +15,7 @@ public static class References
 
 	//
 	public static GameObject theHero;
+	public static Camera theCamera;
 
 	//
 	public static List<GameObject> levelCheckpoints = new List<GameObject>();

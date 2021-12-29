@@ -10,7 +10,7 @@ public class FalconBehavior : MonoBehaviour
 	bool isAsleep = true;
 
 	//Swooping
-	readonly float minHorizontalDistanceToSwoop = 4f;
+	readonly float minHorizontalDistanceToSwoop = 6f;
 	readonly float swoopVerticalOffset = -0.9f;
 	Vector3 swoopPoint = new Vector3(0, 0, 1);					//as long as swoopPoint.z != 0, it isn't initialized with useful data
 	Vector3 movementVector = new Vector3(-5, 0, 0);
@@ -121,7 +121,7 @@ public class FalconBehavior : MonoBehaviour
 	void TakeDamage(Collision2D collision)
 	{
 		//check if we're hit by something fast enough to take damage
-		if (collision.relativeVelocity.magnitude >= References.throwableMinSpeedToKill)
+		if (collision.relativeVelocity.magnitude >= References.throwableMinSpeedToKill && GetComponent<SpriteRenderer>().isVisible)
 			Die(collision);
 	}
 

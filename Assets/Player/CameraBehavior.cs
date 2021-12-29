@@ -18,6 +18,11 @@ public class CameraBehavior : MonoBehaviour
 	Vector3 bugOffset = new Vector3(21.37f, 2.04f, 0);
 	Vector3 myInitialPosition;
 
+	private void Awake()
+	{
+		References.theCamera = gameObject.GetComponent<Camera>();
+	}
+
 	// Start is called before the first frame update
 	void Start()
 	{
