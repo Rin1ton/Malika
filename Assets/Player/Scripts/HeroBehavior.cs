@@ -43,6 +43,8 @@ public class HeroBehavior : MonoBehaviour
 		myRB = gameObject.GetComponent<Rigidbody2D>();
 
 		References.theHero = gameObject;
+
+		References.playerMovement = new Vector3();
 	}
 
 	// Start is called before the first frame update
@@ -141,6 +143,9 @@ public class HeroBehavior : MonoBehaviour
 		if (Vector2.Dot(wishDir, myVelocityRelativeToGround) <= 0 && myVelocityRelativeToGround.magnitude != 0 && isGrounded || isGrounded && myVelocityRelativeToGround.magnitude > playerTopSpeed)
 			myRB.velocity = myRB.velocity.normalized *
 							Mathf.Clamp((myVelocityRelativeToGround.magnitude - playerFriction * Time.deltaTime), 0f, Mathf.Infinity) + myGroundsVelocity;
+
+		//give our animations our appropriate speed
+		References.playerMovement = myVelocityRelativeToGround;
 
 		//apply our force
 		myRB.AddForce(pushDir);

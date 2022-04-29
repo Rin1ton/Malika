@@ -20,7 +20,7 @@ public class PlayerAnimationBehavior : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Mathf.Abs(myRB.velocity.x) >= minSpeedToRun)
+		if (Mathf.Abs(References.playerMovement.x) >= minSpeedToRun)
 		{
 			if (myRB.velocity.x < 0)
 			{
