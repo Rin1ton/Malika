@@ -9,6 +9,7 @@ public class PlayerHealthAndDamageBehavior : MonoBehaviour
 	int heroHealth;
 	float timeSinceLastDamage = Mathf.Infinity;
 	Rigidbody2D myRB;
+	PlayerAnimationBehavior myPAB;
 
 	readonly int startingHeroHealth = 3;
 	readonly float timeInvincibleAfterDamage = 0.8f;
@@ -19,6 +20,7 @@ public class PlayerHealthAndDamageBehavior : MonoBehaviour
 	private void Awake()
 	{
 		myRB = gameObject.GetComponent<Rigidbody2D>();
+		myPAB = GetComponent<PlayerAnimationBehavior>();
 	}
 
 	// Start is called before the first frame update
@@ -67,6 +69,9 @@ public class PlayerHealthAndDamageBehavior : MonoBehaviour
 
 			//tell others we've taken damage
 			timeSinceLastDamage = 0;
+
+			//tell the anims we took damage
+			myPAB.TakeDamage();
 		}
 	}
 

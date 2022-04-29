@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerAnimationBehavior : MonoBehaviour
 {
 
+	readonly float minSpeedToRun = 0.1f;
+	readonly float minTimeToNotBeGrounded = 0.085f;
 	public Animator myAnimator;
 	Rigidbody2D myRB;
-	float minSpeedToRun = 0.1f;
+
 	SpriteRenderer mySR;
 
 	// Start is called before the first frame update
@@ -24,21 +26,42 @@ public class PlayerAnimationBehavior : MonoBehaviour
 		{
 			if (myRB.velocity.x < 0)
 			{
-				myAnimator.SetBool("isRunningLeft", true);
-				myAnimator.SetBool("isRunningRight", false);
+				myAnimator.SetBool("isRunning", true);
 				mySR.flipX = true;
 			}
 			if (myRB.velocity.x > 0)
 			{
-				myAnimator.SetBool("isRunningLeft", false);
-				myAnimator.SetBool("isRunningRight", true);
+				myAnimator.SetBool("isRunning", true);
 				mySR.flipX = false;
 			}
 		}
 		else
 		{
-				myAnimator.SetBool("isRunningLeft", false);
-				myAnimator.SetBool("isRunningRight", false);
+			myAnimator.SetBool("isRunning", false);
+		}
+		if (References.playerTimeSinceGrounded > minTimeToNotBeGrounded)
+		{
+			if (References.playerMovement.y > 0)
+			{
+				myAnimator.SetBool("isRising", true);
+				myAnimator.SetBool("isFalling", false);
+			}
+			if (References.playerMovement.y < 0)
+			{
+				myAnimator.SetBool("isRising", false);
+				myAnimator.SetBool("isFalling", true);
+			}
+		}
+		else
+		{
+			myAnimator.SetBool("isRising", false);
+			myAnimator.SetBool("isFalling", false);
 		}
 	}
+
+	public void TakeDamage()
+	{
+		myAnimator.Play("Take Damage");
+	}
+
 }

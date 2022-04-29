@@ -24,4 +24,5 @@ public static class References
 
 	//animation
 	public static Vector3 playerMovement;
+	public static float playerTimeSinceGrounded;
 }

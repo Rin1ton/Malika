@@ -268,6 +268,9 @@ public class HeroBehavior : MonoBehaviour
 		{
 			timeSinceGrounded = 0;
 		}
+
+		References.playerTimeSinceGrounded = timeSinceGrounded;
+
 	}
 
 }
