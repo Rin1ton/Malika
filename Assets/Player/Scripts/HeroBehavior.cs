@@ -38,9 +38,13 @@ public class HeroBehavior : MonoBehaviour
 	public AudioSource myJumpSound;
 	public AudioSource myDoubleJumpSound;
 
+	//animation
+	PlayerAnimationBehavior myPAB;
+
 	private void Awake()
 	{
 		myRB = gameObject.GetComponent<Rigidbody2D>();
+		myPAB = GetComponent<PlayerAnimationBehavior>();
 
 		References.theHero = gameObject;
 
@@ -204,6 +208,9 @@ public class HeroBehavior : MonoBehaviour
 
 			//play my sound
 			myDoubleJumpSound.Play();
+
+			//play my rocket boots animation
+			myPAB.RocketBoots();
 		}
 	}
 

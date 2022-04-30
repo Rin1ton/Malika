@@ -63,5 +63,10 @@ public class PlayerAnimationBehavior : MonoBehaviour
 	{
 		myAnimator.Play("Take Damage");
 	}
+	
+	public void RocketBoots()
+	{
+		myAnimator.Play("Rocket Boots");
+	}
 
 }
